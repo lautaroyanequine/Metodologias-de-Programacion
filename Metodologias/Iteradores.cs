@@ -89,23 +89,61 @@ namespace Semana1
 
 
 	public class IterarListaAlumno:IteradorDePaginas{
+	
+	//Forma que reciba un coleccionable
+	/*
+//		int paginaActual;
+//		Alumno alumnoPromedio = new Alumno("Lautaro",22345678,111100,7);
+//		Coleccionable listaRecibia;
+//		Conjunto alumnosMayores;
+//		public IterarListaAlumno(Coleccionable l){
+//			listaRecibia=l;
+//			IteradorDePaginas a = listaRecibia.crearIterador();
+//			alumnosMayores = new Conjunto();
+//			
+//			
+//			while(!a.fin())  //hasta que no se llegue al final de la coleccion
+//			{
+//				if(!alumnoPromedio.sosMayor(a.actual()))
+//					alumnosMayores.agregar(a.actual());
+//				a.siguiente();//Avanzo al proximo elemento-itero.
+//				
+//			}
+//			
+//		}
+//		
+//		public void primero(){
+//			paginaActual=0;
+//		}
+//		public void siguiente(){
+//			paginaActual+=1;
+//		}
+//		public bool fin(){
+//			return paginaActual >=alumnosMayores.cuantos()-1;
+//		}
+//		public Comparable actual(){
+//			return alumnosMayores.Datos[paginaActual];
+//			
+//		}
+	*/
+	//Forma Que reciba una Lista
 		int paginaActual;
 		Alumno alumnoPromedio = new Alumno("Lautaro",22345678,111100,7);
-		Coleccionable listaRecibia;
+		List<Comparable> listaRecibia;
 		Conjunto alumnosMayores;
-		public IterarListaAlumno(Coleccionable l){
+		
+		
+		public IterarListaAlumno(List<Comparable> l){
 			listaRecibia=l;
-			IteradorDePaginas a = listaRecibia.crearIterador();
 			alumnosMayores = new Conjunto();
-			
-			
-			while(!a.fin())  //hasta que no se llegue al final de la coleccion
+			for(int i=0;i<listaRecibia.Count;i++)
 			{
-				if(!alumnoPromedio.sosMayor(a.actual()))
-					alumnosMayores.agregar(a.actual());
-				a.siguiente();//Avanzo al proximo elemento-itero.
-				
+				if(!alumnoPromedio.sosMayor(listaRecibia[i]))
+				{
+					alumnosMayores.agregar(listaRecibia[i]);
+				}
 			}
+			
 			
 		}
 		
@@ -125,7 +163,8 @@ namespace Semana1
 	}
 
 	
-
+//Iterar Pila
+/*
 	//	public class IterarPila:IteradorDePaginas{
 //		int paginaActual;
 //		List<Comparable> lista;
@@ -148,6 +187,6 @@ namespace Semana1
 //			return lista[paginaActual];
 //		}
 //	}
-	
+	*/
 	
 }

@@ -7,6 +7,7 @@
  * Para cambiar esta plantilla use Herramientas | Opciones | Codificación | Editar Encabezados Estándar
  */
 using System;
+using System.Collections.Generic;
 
 namespace Semana1
 {
@@ -148,6 +149,198 @@ namespace Semana1
 		}
 				
 	}
+	
+	public class Vendedor : Persona,IObservado{  //Sujeto o Observado
+		int sueldoBaisco;
+		double bonus;
+		double monto;
+			//Observer paso 2 Implementar el observado
+		List<IObservador> observadores = new List<IObservador>();
+		
+		public Vendedor(string n,int d, int sb):base(n,d)
+		{
+			sueldoBaisco=sb;
+			bonus=1;
+		}
+		
+		public double Bonus{
+			get{return bonus;}
+		}
+		public double Monto{
+			get{return monto;}
+			set{ monto=value;}
+		}
+		
+		virtual public void venta(double mon)
+		{
+
+			 monto=mon;
+			this.notificar();
+		}
+		
+		public void aumentaBonus()
+		{
+			bonus=(bonus*1.1);
+		}
+		
+		override public bool sosIgual(Comparable x){
+			return this.Bonus == ((Vendedor)x).Bonus;			
+
+		}
+		override public bool sosMenor(Comparable x){
+			return this.Bonus < ((Vendedor)x).Bonus;			
+							
+		}
+		override public bool sosMayor(Comparable x){
+			return this.Bonus > ((Vendedor)x).Bonus;			
+		}
+		
+	
+		
+		public void agregarObservador(IObservador o){
+			observadores.Add(o);
+		}
+		public void eliminarObservador(IObservador o){
+			observadores.Remove(o);
+		}
+		
+		public void notificar(){
+			foreach (IObservador o in observadores)
+			{
+				o.actualizar(this);
+			}
+		}
+		
+		override public string ToString(){
+			return ("Nombre: "+this.getNombre+/*"| Dni: "+this.getDni.ToString()+/"| Sueldo Basico: "+this.sueldoBaisco.ToString()+"*/"| Bonus: "+this.bonus.ToString() );
+		}
+	}
+	
+	public class VendedorPauperrimo:Vendedor{
+		
+		public VendedorPauperrimo(string n,int d, int sb):base(n,d,sb)
+		{
+			
+		}
+		
+		public void robar(){
+			Console.WriteLine("Robando");
+		}
+		public void descansar(){
+			Console.WriteLine("Descansando");
+		}
+		public void molestarALosCompañeros(){
+			Console.WriteLine("Molestando");
+		}
+		
+		override public void venta(double mon){
+			if(mon < 500){
+				this.robar();
+				this.notificar();
+				
+			}
+			if(mon >4000){
+				this.descansar();
+				this.notificar();
+			}
+			else{
+				this.molestarALosCompañeros();
+				this.notificar();
+			}
+		}
+	}
+	
+	public class Gerente: Persona,IObservador{ //Observador
+		Conjunto mejoresVendedores;
+			public Gerente(string n,int d):base(n,d)
+			{
+				mejoresVendedores=new Conjunto();
+			}
+			
+			public void venta(double monto, Vendedor vendedor)
+			{
+				if(monto > 5000)
+				{
+					mejoresVendedores.agregar(vendedor);
+					vendedor.aumentaBonus();
+				}
+			}
+			
+			public void cerrar(){
+				Semana1.Program.imprimirElementos(mejoresVendedores);
+				
+			}
+			
+			//Paso 3 Implemnetar observador
+			
+			public void actualizar(IObservado o){
+				this.venta(((Vendedor)o).Monto,((Vendedor)o));
+			}
+	}
+	
+	public class Seguridad:Persona,IObservador{
+		Conjunto vendedoresLadrones;
+		public Seguridad(string n,int d):base(n,d){
+			vendedoresLadrones=new Conjunto();
+		}
+		
+		public void venta( double mon,Vendedor o)
+		{
+			if (mon<500)
+				vendedoresLadrones.agregar(o);
+				
+		}
+		
+		public void reaccionar(){
+			Console.WriteLine("Reacciona seguridad");
+		}
+		
+		public void actualizar(IObservado o){
+				this.venta(((Vendedor)o).Monto,((Vendedor)o));
+			}
+	}
+	
+	public class Cliente:Persona,IObservador{
+		
+		Conjunto vendedores;
+		public Cliente(string n,int d):base(n,d){
+			vendedores=new Conjunto();
+		}
+		
+		public void venta( double mon,Vendedor o)
+		{
+			if (mon>4000)
+				vendedores.agregar(o);
+				
+		}
+		public void reaccionar(){
+			Console.WriteLine("Reacciona Cliente");
+		}
+		public void actualizar(IObservado o){
+			this.venta(((Vendedor)o).Monto,((Vendedor)o));
+		}
+	}
+	
+	public class Encargado:Persona,IObservador{
+		Conjunto vendedores;
+		public Encargado(string n,int d):base(n,d){
+			vendedores=new Conjunto();
+		}
+		
+		public void venta( double mon,Vendedor o)
+		{
+			if (mon<4000 && mon >500)
+				vendedores.agregar(o);
+				
+		}
+		public void reaccionar(){
+			Console.WriteLine("Reacciona Encargado");
+		}
+		public void actualizar(IObservado o){
+			this.venta(((Vendedor)o).Monto,((Vendedor)o));
+		}
+	}
+	
 	
 	public class ClaveValor:Comparable{
 		private Comparable clave;

@@ -16,107 +16,7 @@ namespace Semana1
 
 	class Program
 	{
-		//Ejercicio 5
-		private static void llenar(Coleccionable c){
-			Random random = new Random();
-				for(int i=0; i <20;i++)
-					c.agregar(new Numero(random.Next(1,100)));
-			}
 		
-		private static void llenarPersonas(Coleccionable c){
-			string[] nombres= { "juan", "pablo", "Paco", "jose", "Alberto"};
-			String[] apellidos = { "sanchez", "perez", "lopez", "zelaya", "alvarez"};
-			Random random = new Random();
-				for(int i=0; i <20;i++)
-					c.agregar(new Persona(nombres[random.Next(0,5)] + " " + apellidos[random.Next(0,5)],random.Next(0,44444444)));
-			}	
-		
-		private static void llenarAlumnos(Coleccionable c){
-			string[] nombres= { "juan", "pablo", "Julian", "jose", "Alberto","Lautaro","Pedro","Agustin","Jeremias","Martin"};
-			String[] apellidos = { "sanchez", "perez", "lopez", "zelaya", "alvarez","Yanequine","Martinez"};
-			Random random = new Random();
-				for(int i=0; i <3;i++)
-					c.agregar(new Alumno(nombres[random.Next(0,9)] + " " + apellidos[random.Next(0,6)],random.Next(0,44444444)
-					                     ,random.Next(0,10000),random.Next(5,10)));
-//				c.agregar(new Alumno("Lautaro Yanequine",43901862,5536,7)); Para ver si funciona el "Esta" de Informar
-			}		
-				
-		
-		//Ejercicio 6
-		private static void informar( Coleccionable c){
-			Random random = new Random();
-			Console.WriteLine(c.cuantos());
-			Console.WriteLine(c.minimo());
-			Console.WriteLine(c.maximo());
-			Alumno a = new Alumno("Lautaro Yanequine",43901862,5536,7);
-//			Comparable c2 = new Numero(random.Next(1,100));  // A futuro modiifciar,en caso de ver si contiene otra clase habria que generar multiples informar
-			if(c.contiene(a))
-				Console.WriteLine("Esta");
-			else
-				Console.WriteLine("No esta");
-		}
-		
-		//EJERCICIO 7 . PRACTICA 2
-		
-		private static void imprimirElementos(Coleccionable c){
-			
-			/* Este metodo va a funcionar independientemente del coleccionable que se le pase por parametro
-			 gracias al patron Iterator cada coleccionable sabe como iterar sus elementos*/
-			IteradorDePaginas ite = c.crearIterador();
-			
-			while(!ite.fin())  //hasta que no se llegue al final de la coleccion
-			{
-				Console.WriteLine(ite.actual());  //Proceso
-				ite.siguiente();//Avanzo al proximo elemento-itero.
-			}
-		}
-		
-		//EJERCICIO 9 Practica 2
-		private static void cambiarEstrategia(Coleccionable c, CompararAlumnos a ){
-		IteradorDePaginas ite = c.crearIterador();
-		while(!ite.fin())  //hasta que no se llegue al final de la coleccion
-			{
-			((Alumno)ite.actual()).cambiarEstrategia(a);  //Proceso
-				ite.siguiente();//Avanzo al proximo elemento-itero.
-			}
-		
-		}
-		
-		
-		private static void multiplesIteradores()
-
-		{
-			Cola cola = new Cola();
-			llenarAlumnos(cola);
-			Random r = new Random();
-			
-			IteradorDePaginas[] iteradores = new IterarLista[3];
-			bool [] fin = new bool[3];
-			
-			for(int i = 0;i<3;i++){
-				iteradores[i] = cola.crearIterador();
-				fin[i] = false;
-			}
-			while((!fin[0]) ||	(!fin[1]) || (!fin[2])){
-			
-//				for(int ite = 0;ite<3;ite++){
-			
-			
-				int ite= r.Next(3);
-				
-						if(!iteradores[ite].fin())
-				{
-					Console.WriteLine(iteradores[ite].actual());
-					iteradores[ite].siguiente();
-				}
-				else
-					fin[ite]=true;
-				}
-			
-//			}
-			//Podriamos haberlo hecho sin iteradores,pero habria que implementar el recorrido de la cola o de cualquier coleccionable que utilizaramos.
-		}
-//			
 		public static void Main(string[] args)
 		{
 			
@@ -270,7 +170,7 @@ namespace Semana1
 	
 			//EJERCICIO 10 y 11PRACTICA 2
 
-			
+			/*
 			
 			Cola c= new Cola();
 			CompararAlumnos Pornombre= new PorNombre();
@@ -296,8 +196,8 @@ namespace Semana1
 			Console.WriteLine("Estrategia por Legajo");
 			cambiarEstrategia(c,Porlegajo);
 			informar(c);
-			
-			
+//			
+			*/
 			//EJERCICIO 11 PRACTICA 2
 			// Ninguna modificacion.Se podria agregar una estrategia para comparar por egreso si se quisiera
 			
@@ -309,20 +209,170 @@ namespace Semana1
 		
 		//EJERCICIO 12 Y 13 Practica 2
 			/*
-		ColaAlumno ca= new ColaAlumno();
-		llenarAlumnos(ca);
-		Console.WriteLine(ca.cuantos());
-		imprimirElementos(ca);
+//		Cola ca= new Cola();
+//		llenarAlumnos(ca);
+//		Console.WriteLine(ca.cuantos());
+//		imprimirElementos(ca);
 		//Funciona pero me veo "obligado" a crear un nuevo coleccionable (ColaAlumno) q este compuesto un coleccionable(Cola) para pasar como parametro ese coleccionable a IterarListaALlumno,para que este ultimo itere un coleccionable.
 		// Si quisiera comparar con alumnos que esten almacenados en otro coleccionable,tendria que crear otro coleccionable mas por ejemplo PilaAlumno,que este compuesto por Pila
 		//IterarLstaAlumno tiene que recibir siempre un coleccionable para poder iterarlo de forma generica
+		//Otra forma es que reciba siempre una lista generica. No hace falta que se cree otro coleccionable.
+			
 			*/
+			
+			
+			//P R A C T I C A   N 3
+			
+			//Ejercicio 6
+			/*
+			Pila p = new Pila();
+			Cola c = new Cola();
+			ColeccionMultiple m = new ColeccionMultiple(p,c);
+			llenar(p,4);
+			llenar(c,4);
+			
+			Console.WriteLine( "Metodo Informar");
+			informar(m,4);
+			
+			
+		
+			
+			//Ejercicio 7 fabrica de coleccionables,hacer a futuro.
+			*/
+			
+			//Ejercicio 14
+			Pila p = new Pila();
+			VendedorPauperrimo vp= new VendedorPauperrimo("Vendedor malo",20145873,40000);
+			p.agregar(vp);
+			llenar(p,4);
+			Gerente g= new Gerente("Federico Yanequine",39876165);
+			
+			gerenteObservador(p,g);
+			jornadaDeVentas(p);
+			g.cerrar();
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
+		}
+		
+		
+				//Ejercicio 5
+		private static void llenar(Coleccionable c,int queOpcion){
+				for(int i=0; i <20;i++)
+				{
+					Comparable comp= FabricaDeComparables.crearAleatorio(queOpcion);
+					c.agregar(comp);
+				}
+					
+			}
+		
+		
+		//Ejercicio 6
+		private static void informar( Coleccionable c,int opcionElegida){
+			Random random = new Random();
+			Console.WriteLine(c.cuantos());
+			Console.WriteLine(c.minimo());
+			Console.WriteLine(c.maximo());
+			
+			Comparable comp;
+			comp = FabricaDeComparables.crearPorTeclado(opcionElegida);
+			
+//			Alumno a = new Alumno("Lautaro Yanequine",43901862,5536,7);
+//		Comparable c2 = new Numero(random.Next(1,100));  // A futuro modiifciar,en caso de ver si contiene otra clase habria que generar multiples informar
+			if(c.contiene(comp))
+				Console.WriteLine("Esta");
+			else
+				Console.WriteLine("No esta");
+		}
+		
+		//EJERCICIO 7 . PRACTICA 2
+		
+		public static void imprimirElementos(Coleccionable c){
+			
+			/* Este metodo va a funcionar independientemente del coleccionable que se le pase por parametro
+			 gracias al patron Iterator cada coleccionable sabe como iterar sus elementos*/
+			IteradorDePaginas ite = c.crearIterador();
+			
+			while(!ite.fin())  //hasta que no se llegue al final de la coleccion
+			{
+				Console.WriteLine(ite.actual());  //Proceso
+				ite.siguiente();//Avanzo al proximo elemento-itero.
+			}
+		}
+		
+		//EJERCICIO 9 Practica 2
+		private static void cambiarEstrategia(Coleccionable c, CompararAlumnos a ){
+		IteradorDePaginas ite = c.crearIterador();
+		while(!ite.fin())  //hasta que no se llegue al final de la coleccion
+			{
+			((Alumno)ite.actual()).cambiarEstrategia(a);  //Proceso
+				ite.siguiente();//Avanzo al proximo elemento-itero.
+			}
+		
+		}
+		
+		
+		private static void multiplesIteradores()
+
+		{
+			Cola cola = new Cola();
+			llenar(cola,3);
+			Random r = new Random();
+			
+			IteradorDePaginas[] iteradores = new IterarLista[3];
+			bool [] fin = new bool[3];
+			
+			for(int i = 0;i<3;i++){
+				iteradores[i] = cola.crearIterador();
+				fin[i] = false;
+			}
+			while((!fin[0]) ||	(!fin[1]) || (!fin[2])){
+			
+//				for(int ite = 0;ite<3;ite++){
 			
 			
+				int ite= r.Next(3);
+				
+						if(!iteradores[ite].fin())
+				{
+					Console.WriteLine(iteradores[ite].actual());
+					iteradores[ite].siguiente();
+				}
+				else
+					fin[ite]=true;
+				}
 			
+//			}
+			//Podriamos haberlo hecho sin iteradores,pero habria que implementar el recorrido de la cola o de cualquier coleccionable que utilizaramos.
+		}
+		
+		private static void jornadaDeVentas(Coleccionable c)
+		{
+			Random r = new Random();
+			double monto;
+			IteradorDePaginas ite = c.crearIterador();
+			
+			while(!ite.fin())  //hasta que no se llegue al final de la coleccion
+			{
+				monto=r.Next(1,7000);
+				  //Proceso
+				((Vendedor)ite.actual()).venta(monto);
+				ite.siguiente();//Avanzo al proximo elemento-itero.
+			}
+		
+			
+		}
+		private static void gerenteObservador( Coleccionable c ,Gerente g)
+		{
+			IteradorDePaginas ite = c.crearIterador();
+			
+			while(!ite.fin())  //hasta que no se llegue al final de la coleccion
+			{
+				
+				  //Proceso
+				  ((Vendedor)ite.actual()).agregarObservador(g);
+					ite.siguiente();//Avanzo al proximo elemento-itero.
+			}
 		}
 	}
 }

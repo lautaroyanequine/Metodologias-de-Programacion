@@ -63,6 +63,29 @@ namespace Semana1
 	 		//Esta interface la deben implementar todos los objetos que posean un iterador para iterar sobre sus elementos
 	 		IteradorDePaginas crearIterador();
 	 	}
+	 	
+	 	
+	//Paso 0 de Factory 	
+	public interface IFabricaDeComparable{
+	 		
+	 		Comparable crearAleatorio();
+	 		
+	 		Comparable crearPorTeclado();
+	}
+	
+	//Observer 
+	//Paso 1 interfaces
+	
+	//Tambienn se puede implementar con clase abstracta
+	public interface IObservador{
+		void actualizar(IObservado o); //Me entero del cambio
+	}
+	
+	public interface IObservado{
+		void agregarObservador(IObservador o);
+		void eliminarObservador(IObservador o);
+		void notificar(); //Cambie paso algo
+	}
 
 	 
 	 	
