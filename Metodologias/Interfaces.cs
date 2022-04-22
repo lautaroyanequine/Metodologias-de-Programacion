@@ -73,6 +73,10 @@ namespace Semana1
 	 		Comparable crearPorTeclado();
 	}
 	
+	public interface IFabricaDeColeccionables{
+		Coleccionable crearColeccionable();
+	}
+	
 	//Observer 
 	//Paso 1 interfaces
 	

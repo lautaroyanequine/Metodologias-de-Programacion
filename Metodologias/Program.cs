@@ -221,10 +221,37 @@ namespace Semana1
 			*/
 			
 			
-			//P R A C T I C A   N 3
+			//*************************     P R A C T I C A   N 3    ************************************************************************************************
 			
 			//Ejercicio 6
 			/*
+			Console.WriteLine("Practica 3 | Ejercicio 6: ");
+			
+			Pila p = new Pila();
+			Cola c = new Cola();
+			ColeccionMultiple m = new ColeccionMultiple(p,c);
+			llenar(p,3);
+			llenar(c,3);
+			
+			Console.WriteLine( "Metodo Informar");
+			informar(m,3);
+			
+			*/
+			//Ejercicio 7 
+			/*
+			Console.WriteLine("Practica 3 | Ejercicio 7: ");
+		
+			Coleccionable col=elegirColeccionable();
+			
+			llenar(col,3);
+			Console.WriteLine( "Metodo Informar");
+			informar(col,3);
+			*/
+			
+			//Ejercicio 9
+			/*
+			Console.WriteLine("Practica 3 | Ejercicio 9: ");
+			
 			Pila p = new Pila();
 			Cola c = new Cola();
 			ColeccionMultiple m = new ColeccionMultiple(p,c);
@@ -233,24 +260,42 @@ namespace Semana1
 			
 			Console.WriteLine( "Metodo Informar");
 			informar(m,4);
-			
-			
-		
-			
-			//Ejercicio 7 fabrica de coleccionables,hacer a futuro.
 			*/
 			
+			
 			//Ejercicio 14
+			/*
+			Console.WriteLine("Practica 3 | Ejercicio 14: ");
+			
+			Pila p = new Pila();
+			llenar(p,4);
+			Gerente g= new Gerente("Federico Yanequine",39876165);
+			agregarObservador(p,g);
+			jornadaDeVentas(p);
+			informar(p,4);
+			Console.WriteLine("Los Mejores vendedores fueron: \n");
+			g.cerrar();
+		*/
+			
+			//Ejercicio 15
+			/*
+			Console.WriteLine("Practica 3 | Ejercicio 15: ");
+			
 			Pila p = new Pila();
 			VendedorPauperrimo vp= new VendedorPauperrimo("Vendedor malo",20145873,40000);
 			p.agregar(vp);
 			llenar(p,4);
 			Gerente g= new Gerente("Federico Yanequine",39876165);
-			
-			gerenteObservador(p,g);
+			Seguridad s = new Seguridad("Seguridad",11111111);
+			Cliente c = new Cliente("cliente",11112311);
+			Encargado e = new Encargado("Encargado",112313111);
+			agregarObservador(p,g);
+			agregarObservadorAPauperrimo(vp,s,c,e);
 			jornadaDeVentas(p);
+			informar(p,4);
+			Console.WriteLine("Los Mejores vendedores fueron: \n");
 			g.cerrar();
-			
+			*/
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
@@ -258,7 +303,7 @@ namespace Semana1
 		
 				//Ejercicio 5
 		private static void llenar(Coleccionable c,int queOpcion){
-				for(int i=0; i <20;i++)
+				for(int i=0; i <7;i++)
 				{
 					Comparable comp= FabricaDeComparables.crearAleatorio(queOpcion);
 					c.agregar(comp);
@@ -270,10 +315,14 @@ namespace Semana1
 		//Ejercicio 6
 		private static void informar( Coleccionable c,int opcionElegida){
 			Random random = new Random();
+			Console.Write("Cuantos: ");
 			Console.WriteLine(c.cuantos());
+			Console.Write("Minimo: ");
 			Console.WriteLine(c.minimo());
+			Console.Write("Maximo: ");
 			Console.WriteLine(c.maximo());
 			
+			Console.WriteLine("Para ver si esta ");
 			Comparable comp;
 			comp = FabricaDeComparables.crearPorTeclado(opcionElegida);
 			
@@ -283,6 +332,23 @@ namespace Semana1
 				Console.WriteLine("Esta");
 			else
 				Console.WriteLine("No esta");
+		}
+		
+		
+		//Ejercicio 7 Practica 3
+		private static Coleccionable elegirColeccionable(){
+			int opcion ;
+			Console.WriteLine("******************************************************************************\n" +
+			                  "* Elije el coleccionable que desea crear        \n" +
+			                  "* Opcion 1 : Pila\n" +
+			                  "* Opcion 2 : Cola\n" +
+			                  "* Opcion 3 : Coleccion Multiple\n" + 
+			                  "* Opcion 4 : Conjunto\n"+
+			                  "* Opcion 5 : Diccionario\n");
+			
+			opcion=int.Parse(Console.ReadLine());
+			Coleccionable coleccionable= FabricaDeColeccionables.crearColeccionable(opcion);
+			return coleccionable;
 		}
 		
 		//EJERCICIO 7 . PRACTICA 2
@@ -350,19 +416,23 @@ namespace Semana1
 		{
 			Random r = new Random();
 			double monto;
-			IteradorDePaginas ite = c.crearIterador();
-			
-			while(!ite.fin())  //hasta que no se llegue al final de la coleccion
-			{
-				monto=r.Next(1,7000);
-				  //Proceso
-				((Vendedor)ite.actual()).venta(monto);
-				ite.siguiente();//Avanzo al proximo elemento-itero.
+
+			for(int i=0;i<20;i++){ //Para que cada vendedor etenga 20 ventas
+				IteradorDePaginas ite = c.crearIterador();
+				while(!ite.fin())  //hasta que no se llegue al final de la coleccion
+					{
+						monto=r.Next(1,7000);
+						  //Proceso
+						((Vendedor)ite.actual()).venta(monto);
+						ite.siguiente();//Avanzo al proximo elemento-itero.
+					}
 			}
+			
+		
 		
 			
 		}
-		private static void gerenteObservador( Coleccionable c ,Gerente g)
+		private static void agregarObservador( Coleccionable c ,IObservador g)
 		{
 			IteradorDePaginas ite = c.crearIterador();
 			
@@ -371,8 +441,16 @@ namespace Semana1
 				
 				  //Proceso
 				  ((Vendedor)ite.actual()).agregarObservador(g);
-					ite.siguiente();//Avanzo al proximo elemento-itero.
+				  ite.siguiente();//Avanzo al proximo elemento-itero.
+				  }
+
 			}
+		private static void agregarObservadorAPauperrimo( VendedorPauperrimo c ,IObservador se,IObservador cli,IObservador enc)
+		{
+			c.agregarObservador(se);
+		    c.agregarObservador(cli);
+			c.agregarObservador(enc);
+
+		}
 		}
 	}
-}

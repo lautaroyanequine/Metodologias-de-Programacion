@@ -232,7 +232,7 @@ namespace Semana1
 	
 	public class ColeccionMultiple : Coleccionable,iterable
 	{
-		
+		Random r= new Random();
 		Pila pila;
 		Cola cola;
 		
@@ -263,6 +263,12 @@ namespace Semana1
 
 		}
 		public void agregar(Comparable c){
+			int num=r.Next(2);
+			//Guarda de manera aleatoria
+			if(num ==0)
+				pila.agregar(c);
+			else 
+				cola.agregar(c);
 			return;
 		}
 		
@@ -289,21 +295,26 @@ namespace Semana1
 		
 		public void agregar(Comparable x){
 			//agrega el elemento al conjunto si es que éste no existe
-			if(!pertenece(x))
+			if(!contiene(x))
 				datos.Add(x);
-			else
-				Console.WriteLine("El elemento ya pertence a la colección");
+			
 		}
 		
-		public bool pertenece(Comparable x){
-			return datos.Contains(x);
-		}
+//		public bool pertenece(Comparable x){
+//			return datos.Contains(x);
+//		}
 
 		public int cuantos(){
 			return datos.Count;
 		}
-		public bool contiene( Comparable c){
-			return datos.Contains(c);
+		public bool contiene (Comparable c){
+//			return datos.Contains(c);   MAL
+			
+			for(int i = 0; i<this.cuantos(); i++){
+				if(datos[i].sosIgual(c))
+					return true;
+			}
+			return false;
 		}
 		public Comparable minimo(){
 			Comparable min=datos[0];
@@ -343,13 +354,13 @@ namespace Semana1
 		//Coleccion de elementos,donde cada elemento tiene una clave asociada.Las claves no pueden repetirse
 		
 		
-		private List<Comparable> datos; // Almacena ClaveValor en un Conjunto
+		private Conjunto datos; // Almacena ClaveValor en un Conjunto
 		private List<Comparable> valores; //Almacena solo los valores. Se va a iterar sobre esto
 		private Random r = new Random();
 		
 		
 		public Diccionario(){
-			datos=new List<Comparable>();
+			datos=new Conjunto();	
 			valores= new List<Comparable>(); 
 		}
 		
@@ -358,16 +369,16 @@ namespace Semana1
 			return cv1.Clave.sosIgual(cv2.Clave);
 		}
 		
-		public void agregarAsociacion(Comparable ClaveParametro,Comparable ValorParametro)
+		public void agregar(Comparable ClaveParametro,Comparable ValorParametro)
 		{
 
 			ClaveValor cvNuevo= new ClaveValor(ClaveParametro,ValorParametro);
 			bool aux=true;
-			for(int i = 0; i<datos.Count;i++)
+			for(int i = 0; i<datos.cuantos();i++)
 			{
-				if(comparacionClaves(((ClaveValor)datos[i]),cvNuevo))
+				if(comparacionClaves(((ClaveValor)datos.Datos[i]),cvNuevo))
 				   {
-				   	((ClaveValor)datos[i]).Valor=ValorParametro;
+				   	((ClaveValor)datos.Datos[i]).Valor=ValorParametro;
 				   	valores[i]=ValorParametro;
 				  
 				   	
@@ -377,7 +388,7 @@ namespace Semana1
 			}
 			if(aux)
 			{
-				datos.Add(cvNuevo);
+				datos.agregar(cvNuevo);
 				valores.Add(ValorParametro);
 			
 			}
@@ -388,7 +399,7 @@ namespace Semana1
 			
 			Numero n= new Numero(r.Next(3000));
 		
-			agregarAsociacion(n,valor);
+			agregar(n,valor);
 			
 
 		}
@@ -396,9 +407,9 @@ namespace Semana1
 		
 		public Comparable valorDe(Comparable clave){
 
-			for(int i = 0 ; i <datos.Count;i++)
+			for(int i = 0 ; i <datos.cuantos();i++)
 			{
-				ClaveValor aux1 = ((ClaveValor)datos[i]);
+				ClaveValor aux1 = ((ClaveValor)datos.Datos[i]);
 				if(aux1.Clave.sosIgual(clave))
 				{
 					
@@ -410,12 +421,12 @@ namespace Semana1
 		}
 		
 		public int cuantos(){
-		return datos.Count;
+			return datos.cuantos();
 		}
 		public bool contiene( Comparable valor){
-			for(int i = 0 ; i <datos.Count;i++)
+			for(int i = 0 ; i <datos.cuantos();i++)
 			{
-				ClaveValor aux1 = ((ClaveValor)datos[i]);
+				ClaveValor aux1 = ((ClaveValor)datos.Datos[i]);
 				if(aux1.Valor.sosIgual(valor))
 				{
 					

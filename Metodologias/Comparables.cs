@@ -108,7 +108,7 @@ namespace Semana1
 			promedio=p;
 			
 			//3.2 Crear un estrategia por defecto
-			estrategia= new PorPromedio();  //Comparacion por Legajo por defecto. Antiguedad
+			estrategia= new PorLegajo();  //Comparacion por Legajo por defecto. Antiguedad
 		}
 		public int Legajo{
 			get{return legajo;}
@@ -151,9 +151,9 @@ namespace Semana1
 	}
 	
 	public class Vendedor : Persona,IObservado{  //Sujeto o Observado
-		int sueldoBaisco;
-		double bonus;
-		double monto;
+		protected int sueldoBaisco;
+	protected	double bonus;
+	protected	double monto;
 			//Observer paso 2 Implementar el observado
 		List<IObservador> observadores = new List<IObservador>();
 		
@@ -184,7 +184,7 @@ namespace Semana1
 		}
 		
 		override public bool sosIgual(Comparable x){
-			return this.Bonus == ((Vendedor)x).Bonus;			
+			return this.getDni == ((Vendedor)x).getDni;			
 
 		}
 		override public bool sosMenor(Comparable x){
@@ -212,7 +212,7 @@ namespace Semana1
 		}
 		
 		override public string ToString(){
-			return ("Nombre: "+this.getNombre+/*"| Dni: "+this.getDni.ToString()+/"| Sueldo Basico: "+this.sueldoBaisco.ToString()+"*/"| Bonus: "+this.bonus.ToString() );
+			return ("Nombre: "+this.getNombre+"| Dni: "+this.getDni.ToString()+/*"| Sueldo Basico: "+this.sueldoBaisco.ToString()+"*/"| Bonus: "+this.bonus.ToString() );
 		}
 	}
 	
@@ -234,19 +234,19 @@ namespace Semana1
 		}
 		
 		override public void venta(double mon){
+			monto=mon;
 			if(mon < 500){
 				this.robar();
-				this.notificar();
-				
 			}
-			if(mon >4000){
+			else if(mon >4000){
 				this.descansar();
-				this.notificar();
+				
 			}
 			else{
 				this.molestarALosCompañeros();
-				this.notificar();
+				
 			}
+			this.notificar();
 		}
 	}
 	
@@ -287,7 +287,12 @@ namespace Semana1
 		public void venta( double mon,Vendedor o)
 		{
 			if (mon<500)
+			{
 				vendedoresLadrones.agregar(o);
+				this.reaccionar();
+			}
+
+			
 				
 		}
 		
@@ -310,14 +315,18 @@ namespace Semana1
 		public void venta( double mon,Vendedor o)
 		{
 			if (mon>4000)
+			{
 				vendedores.agregar(o);
+				this.reaccionar();
+			}
+
 				
 		}
 		public void reaccionar(){
-			Console.WriteLine("Reacciona Cliente");
+			Console.WriteLine("Cliente consultando");
 		}
 		public void actualizar(IObservado o){
-			this.venta(((Vendedor)o).Monto,((Vendedor)o));
+				this.venta(((Vendedor)o).Monto,((Vendedor)o));
 		}
 	}
 	
@@ -330,14 +339,18 @@ namespace Semana1
 		public void venta( double mon,Vendedor o)
 		{
 			if (mon<4000 && mon >500)
-				vendedores.agregar(o);
+			{
+				vendedores.agregar(o);		
+				this.reaccionar();
+			}
+
 				
 		}
 		public void reaccionar(){
 			Console.WriteLine("Reacciona Encargado");
 		}
 		public void actualizar(IObservado o){
-			this.venta(((Vendedor)o).Monto,((Vendedor)o));
+				this.venta(((Vendedor)o).Monto,((Vendedor)o));
 		}
 	}
 	
