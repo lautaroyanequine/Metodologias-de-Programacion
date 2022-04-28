@@ -30,6 +30,7 @@ namespace Semana1
 					case 2: fabrica = new FabricaDePersonas(); break;
 					case 3: fabrica = new FabricaDeAlumnos(); break;
 					case 4 : fabrica = new FabricaDeVendedores(); break;
+					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
 				
 			}
 			return fabrica.crearAleatorio();
@@ -87,9 +88,30 @@ namespace Semana1
 		
 	}
 	public class FabricaDeAlumnos:FabricaDeComparables{
+		protected Alumno a1,a2;
 		override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			Alumno a= new Alumno(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+			a1= new Alumno(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+			return a1;
+		}
+		override public Comparable crearPorTeclado(){
+			LectorDeDatos l = new LectorDeDatos();
+			Console.WriteLine("Ingrese nombre y apellido: ");
+			string nombre= l.stringPorTeclado();
+			Console.WriteLine("Ingrese DNI: ");
+			int dni= l.numeroPorTeclado();
+			Console.WriteLine("Ingrese Legajo: ");
+			int legajo= l.numeroPorTeclado();	
+			Console.WriteLine("Ingrese Promedio: ");
+			int promedio= l.numeroPorTeclado();
+			a2 = new Alumno(nombre,dni,legajo,promedio);
+			return a2;
+		}
+	}
+	public class FabricaDeAlumnosMuyEstudioso:FabricaDeComparables{
+		override public Comparable crearAleatorio(){
+			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
+			AlumnoMuyEstudioso a= new AlumnoMuyEstudioso(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
 			return a;
 		}
 		override public Comparable crearPorTeclado(){
@@ -102,8 +124,21 @@ namespace Semana1
 			int legajo= l.numeroPorTeclado();	
 			Console.WriteLine("Ingrese Promedio: ");
 			int promedio= l.numeroPorTeclado();
-			Alumno a = new Alumno(nombre,dni,legajo,promedio);
+			AlumnoMuyEstudioso a = new AlumnoMuyEstudioso(nombre,dni,legajo,promedio);
 			return a;
+		}
+	}
+	
+	public class StudentsFactory:FabricaDeAlumnos{
+		
+		override public Comparable crearAleatorio(){
+			Alumno a;
+			a=((Alumno)base.crearAleatorio());
+			
+			return a;
+		}
+		override public Comparable crearPorTeclado(){
+			
 		}
 	}
 	public class FabricaDeVendedores:FabricaDeComparables{

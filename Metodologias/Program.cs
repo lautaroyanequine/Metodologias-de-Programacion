@@ -222,7 +222,7 @@ namespace Semana1
 			
 			
 			//*************************     P R A C T I C A   N 3    ************************************************************************************************
-			
+		
 			//Ejercicio 6
 			/*
 			Console.WriteLine("Practica 3 | Ejercicio 6: ");
@@ -264,7 +264,7 @@ namespace Semana1
 			
 			
 			//Ejercicio 14
-			/*
+			/*		
 			Console.WriteLine("Practica 3 | Ejercicio 14: ");
 			
 			Pila p = new Pila();
@@ -275,8 +275,8 @@ namespace Semana1
 			informar(p,4);
 			Console.WriteLine("Los Mejores vendedores fueron: \n");
 			g.cerrar();
-		*/
-			
+		
+			*/
 			//Ejercicio 15
 			/*
 			Console.WriteLine("Practica 3 | Ejercicio 15: ");
@@ -296,6 +296,20 @@ namespace Semana1
 			Console.WriteLine("Los Mejores vendedores fueron: \n");
 			g.cerrar();
 			*/
+			
+			
+			
+			//*************************     P R A C T I C A   N 4    ************************************************************************************************
+		
+			//Ejercicio 4
+			Console.WriteLine("Practica 4 | Ejercicio 4: ");
+			Teacher t= new Teacher();
+			agregarStudents(t);
+			t.teachingAClass();
+			
+
+		
+			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
@@ -452,5 +466,28 @@ namespace Semana1
 			c.agregarObservador(enc);
 
 		}
+		
+		private static void  agregarStudents(Teacher t){
+			for(int i = 0; i<20;i++)
+			{
+				if(i<10){
+
+					Comparable comp= FabricaDeComparables.crearAleatorio(3);
+					IAlumno decorador= new DecoradorLegajo( ((Alumno)comp) );
+					IAlumno decorador2= new DecoradorLetras( decorador );
+					IAlumno decorador3= new DecoradorPromocion( decorador2 );
+					IAlumno decorador4= new DecoradorListado( decorador3 );
+					IAlumno decorador5= new DecoradorAsterisco( decorador4 );
+					Student student= new AlumnoAdapter( comp);
+					t.goToClass(student);
+				}else{
+					Comparable comp1= FabricaDeComparables.crearAleatorio(5);
+					IAlumno decorador= new DecoradorListado( ((Alumno)comp1) );
+					Student student2= new AlumnoAdapter( decorador );
+					t.goToClass(student2);
+				}
+			}
+		}
+		
 		}
 	}

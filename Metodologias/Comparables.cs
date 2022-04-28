@@ -64,16 +64,16 @@ namespace Semana1
 	}
 	
 	public class Persona : Comparable{
-		string nombre;
-		int dni;
+		protected string nombre;
+		protected int dni;
 		public Persona(string n, int d){
 			nombre=n;
 			dni=d;
 		}
-		public string getNombre{
+		 public string getNombre{
 			get{return nombre;}
 		}
-		public int getDni{
+		 public int getDni{
 			get{return dni;}
 		}
 		
@@ -94,8 +94,10 @@ namespace Semana1
 		}
 	}
 	
-	public class Alumno:Persona{
-		private int legajo,promedio;
+	public class Alumno:Persona,IAlumno{
+		//Alumno es el componenten concreto. tienen el comportamiento de base- Decorator.Tienen q implementar Ialumno
+		private int legajo,promedio,calificacion;
+		protected static Random r = new Random();
 		
 		//Paso 3 - Modificar el contexto. Strategy
 		
@@ -108,15 +110,28 @@ namespace Semana1
 			promedio=p;
 			
 			//3.2 Crear un estrategia por defecto
-			estrategia= new PorLegajo();  //Comparacion por Legajo por defecto. Antiguedad
+			estrategia= new PorCalificacion();  //Comparacion por Legajo por defecto. Antiguedad
 		}
-		public int Legajo{
-			get{return legajo;}
+		public int getLegajo(){
+			return legajo;
 		}
-		public int Promedio{
-			get{return promedio;}
+		public int getCalificacion(){
+			return calificacion;
+			
 		}
-		
+		 public string getNombre(){
+			return nombre;
+		}
+		 public int getDni(){
+			return dni;
+		}
+		public int getPromedio(){
+			return promedio;
+		}
+		public void setCalificacion(int c){
+			calificacion=c;
+		}
+	
 		
 		//Patron Strategy. Metodo para cambiar el algoritmo de comparacion
 		//3.3 Mecanismo para cambiar estrategia
@@ -128,26 +143,91 @@ namespace Semana1
 		//Paso 4-Delegar la responsabilidad a la estrategia
 		override public bool sosIgual(Comparable x){
 //			return this.getLegajo == ((Alumno)x).getLegajo;			
-			return estrategia.compararIgual(this,((Alumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
+			return estrategia.compararIgual(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
 		}
 		override public bool sosMenor(Comparable x){
 			//return this.getLegajo < ((Alumno)x).getLegajo;
-			return estrategia.compararMenor(this,((Alumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
+			return estrategia.compararMenor(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
 							
 		}
 		override public bool sosMayor(Comparable x){
 //			return this.getLegajo > ((Alumno)x).getLegajo;	
-			return estrategia.compararMayor(this,((Alumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.		
+			return estrategia.compararMayor(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.		
 		}
 		
 		/*Esto nos evita tener que utilizar multiples If's. Por ejemplo : If por legajo,if por dni,etc.
 		Tambien nos facilita a la hora de agregar otro algoritmo de comparacion,ya que no modifica en nada al codigo ya creado. Solo
 		 tendriamos que modificar la estartegia del algrotimo*/
 
+		
+		
+		//Practica 4
+		virtual public int responderPregunta(int pregunta){
+			
+			return r.Next(1,4);
+		}
+		//Comportamiento de base
+		public string mostrarCalificacion(){
+			return ("Nombre: "+this.getNombre()+"  "+"| Calificacion: "+this.getCalificacion().ToString() );
+		}
+		
 			override public string ToString(){
-			return ("Nombre: "+this.getNombre+"| Dni: "+this.getDni.ToString()+"| Legajo: "+this.Legajo.ToString()+"| Promedio: "+this.Promedio.ToString() );
+			return ("Nombre: "+this.getNombre()+"| Dni: "+this.getDni().ToString()+"| Legajo: "+this.getLegajo().ToString()+"| Promedio: "+this.getPromedio().ToString() );
 		}
 				
+	}
+	
+	public class AlumnoMuyEstudioso:Alumno{
+		public AlumnoMuyEstudioso(string n,int d,int l,int p):base(n,d,l,p)
+		{
+			
+		}
+		
+		public override int responderPregunta(int pregunta)
+		{
+			return pregunta%3;
+		}
+	}
+	
+	//Adapter
+	//Paso 1. Crear el adaptador
+	public class AlumnoAdapter:Student{//Subclase del objetivo. En este caso Student
+		//Paso 1. 1 Tener una composicion al adaptable
+		IAlumno alumno; //Adaptable.El adaptador tiene una instancia de la clase que se desea adaptar
+		
+		public AlumnoAdapter(IAlumno a){
+			alumno=a;
+		}
+		public IAlumno Alumno{
+			get{return alumno;}
+		}
+		
+		//Paso 1.2 Hcaer la traduccion de todos los metodos de objetivo al
+		//Correspondiente adaptable
+		
+		public string getName(){
+			return alumno.getNombre();
+		}
+		public int yourAnswerIs(int question){
+			return alumno.responderPregunta(question);
+		}
+		public void setScore(int score){
+			alumno.setCalificacion(score);
+		}
+		public string showResult(){
+			return alumno.mostrarCalificacion();
+		}
+		public bool equals(Student student){
+			return alumno.sosIgual(    ((Comparable)((AlumnoAdapter)student).Alumno)      );
+			
+			
+		}
+		public bool lessThan(Student student){
+			return alumno.sosMenor(   ((Comparable)((AlumnoAdapter)student).Alumno)     );
+		}
+		public bool greaterThan(Student student){
+			return alumno.sosMayor(   ((Comparable)((AlumnoAdapter)student).Alumno)     );
+		}
 	}
 	
 	public class Vendedor : Persona,IObservado{  //Sujeto o Observado

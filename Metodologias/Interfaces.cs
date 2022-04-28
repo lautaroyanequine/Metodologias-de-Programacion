@@ -42,9 +42,9 @@ namespace Semana1
 	 		//Paso 1 interface Estrategia - Strategy
 	 		/*Va a teber todos aquellos metodos complicados de mantener.
 			Cada clase que implemente CompararAlumnos implementa su propia versión del algoritmo de comparar alumnos .*/
-	 		bool compararIgual(Alumno a,Alumno b);
-	 		bool compararMayor(Alumno a,Alumno b);
-	 		bool compararMenor(Alumno a,Alumno b);
+	 		bool compararIgual(IAlumno a,IAlumno b);
+	 		bool compararMayor(IAlumno a,IAlumno b);
+	 		bool compararMenor(IAlumno a,IAlumno b);
 	 		
 	}
 	 	
@@ -90,8 +90,30 @@ namespace Semana1
 		void eliminarObservador(IObservador o);
 		void notificar(); //Cambie paso algo
 	}
-
-	 
+	
+	
+	//Decorator
+	public interface IAlumno:Comparable{
+		
+		// Paso 1. Crear la interface componente
+		//Poner todos los metodos de ali,m
+		//meter todos los metodos q neceistamos para la implementacion
+		//Equivale a la componente -superclase
+		int getLegajo();
+		int getDni();
+		int getPromedio();
+		string getNombre();
+		void setCalificacion(int c);
+		int getCalificacion();
+		void cambiarEstrategia(CompararAlumnos a);
+		bool sosIgual(Comparable x);
+		bool sosMenor(Comparable x);
+		bool sosMayor(Comparable x);
+		
+		int responderPregunta(int pregunta);
+		string mostrarCalificacion();
+		string ToString();
+	}
 	 	
 	
 		 	
