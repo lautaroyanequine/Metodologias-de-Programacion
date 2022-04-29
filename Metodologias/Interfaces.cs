@@ -35,6 +35,7 @@ namespace Semana1
 		Comparable minimo();
 		Comparable maximo();
 		void agregar(Comparable c);
+		void ordenar();
 
 	}
 	 	

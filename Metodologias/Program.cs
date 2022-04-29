@@ -302,14 +302,33 @@ namespace Semana1
 			//*************************     P R A C T I C A   N 4    ************************************************************************************************
 		
 			//Ejercicio 4
+			/*
 			Console.WriteLine("Practica 4 | Ejercicio 4: ");
 			Teacher t= new Teacher();
 			agregarStudents(t);
 			t.teachingAClass();
-			
-
 		
+			*/
 			
+	
+
+	//Ejercicio 8
+	
+			Console.WriteLine("Practica 4 | Ejercicio 8: ");
+			Teacher t= new Teacher();
+			agregarStudents(t);
+			t.teachingAClass();
+			
+	//Ejercicio 9
+	
+	Console.WriteLine("Practica 4 | Ejercicio 9: ");
+	Coleccionable c =elegirColeccionable();
+	Teacher t1 = new Teacher();
+	t1.setStudents( new IterableAdapter(c));
+	agregarStudents(t1);
+	t1.teachingAClass();
+		
+		
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
@@ -470,21 +489,33 @@ namespace Semana1
 		private static void  agregarStudents(Teacher t){
 			for(int i = 0; i<20;i++)
 			{
-				if(i<10){
-
-					Comparable comp= FabricaDeComparables.crearAleatorio(3);
+				if(i<11){
+					//Crea alumn
+					
+					Comparable comp= FabricaDeComparables.crearAleatorio(6);
+					/*
 					IAlumno decorador= new DecoradorLegajo( ((Alumno)comp) );
 					IAlumno decorador2= new DecoradorLetras( decorador );
 					IAlumno decorador3= new DecoradorPromocion( decorador2 );
 					IAlumno decorador4= new DecoradorListado( decorador3 );
-					IAlumno decorador5= new DecoradorAsterisco( decorador4 );
-					Student student= new AlumnoAdapter( comp);
+					IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+					*/
+					
+					Student student= new AlumnoAdapter( ((IAlumno)comp)  );
 					t.goToClass(student);
 				}else{
-					Comparable comp1= FabricaDeComparables.crearAleatorio(5);
-					IAlumno decorador= new DecoradorListado( ((Alumno)comp1) );
-					Student student2= new AlumnoAdapter( decorador );
-					t.goToClass(student2);
+					/*
+					Comparable comp= FabricaDeComparables.crearAleatorio(5);
+					IAlumno decorador= new DecoradorLegajo( ((Alumno)comp) );
+					IAlumno decorador2= new DecoradorLetras( decorador );
+					IAlumno decorador3= new DecoradorPromocion( decorador2 );
+					IAlumno decorador4= new DecoradorListado( decorador3 );
+					IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+					Student student2= new AlumnoAdapter( decorador5 );*/
+					//Por el momento solo con aleatorio(completo)
+					Comparable comp= FabricaDeComparables.crearAleatorio(7);
+					Student s2 = new AlumnoAdapter( ((IAlumno)comp)   );
+					t.goToClass(s2);
 				}
 			}
 		}

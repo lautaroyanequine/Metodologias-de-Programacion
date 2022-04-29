@@ -31,6 +31,8 @@ namespace Semana1
 					case 3: fabrica = new FabricaDeAlumnos(); break;
 					case 4 : fabrica = new FabricaDeVendedores(); break;
 					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
+					case 6: fabrica = new StudentsFactory(); break;
+					case 7: fabrica = new StudentsFactoryMuyEstudioso(); break;
 				
 			}
 			return fabrica.crearAleatorio();
@@ -44,6 +46,9 @@ namespace Semana1
 					case 2: fabrica = new FabricaDePersonas(); break;
 					case 3: fabrica = new FabricaDeAlumnos(); break;
 					case 4: fabrica = new FabricaDeVendedores(); break;
+					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
+					case 6: fabrica = new StudentsFactory(); break;
+					case 7: fabrica = new StudentsFactoryMuyEstudioso(); break;
 			}
 			return fabrica.crearPorTeclado();
 		}
@@ -131,16 +136,258 @@ namespace Semana1
 	
 	public class StudentsFactory:FabricaDeAlumnos{
 		
-		override public Comparable crearAleatorio(){
-			Alumno a;
-			a=((Alumno)base.crearAleatorio());
-			
-			return a;
-		}
+		
+		//tengo q retornar un IAlumno
+		
 		override public Comparable crearPorTeclado(){
+			//Mejorar este codigo
+			IAlumno final=((Alumno)base.crearAleatorio());
+			IAlumno a=((Alumno)base.crearAleatorio());
+			string opcion;
+		
+			
+			Console.WriteLine("¿Desea agregar un decorado al student? ");
+			opcion =Console.ReadLine().ToUpper();
+			if(opcion=="SI")
+			{
+				Console.WriteLine("Desea que el alumno sea decorado con Legajo(SI/NO): ");
+				 string opcionLegajo =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Letras(SI/NO): ");
+				 string opcionLetras =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Promocion(SI/NO): ");
+				 string opcionPromocion =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Listado(SI/NO): ");
+				 string opcionListado =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Asterisco(SI/NO): ");
+				 string opcionAsterisco =Console.ReadLine().ToUpper();
+				 
+				 if(opcionLegajo=="SI"){
+				 	IAlumno aux= new DecoradorLegajo(a);
+				 	final=aux;
+				 	if(opcionLetras=="SI")
+				 	{
+				 		IAlumno aux2= new DecoradorLetras(aux);
+				 		final=aux2;
+				 		if(opcionPromocion=="SI"){
+				 			IAlumno aux3 = new DecoradorPromocion(aux2);
+				 			final=aux3;
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux3);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 	}
+				 }
+				 else{
+				 	if(opcionLetras=="SI")
+				 	{
+				 		IAlumno aux2= new DecoradorLetras(a);
+				 		final=aux2;
+				 		if(opcionPromocion=="SI"){
+				 			IAlumno aux3 = new DecoradorPromocion(aux2);
+				 			final=aux3;
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux3);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 			
+				 		}
+				 		else{
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux2);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 	}
+				 	else{
+				 		if(opcionListado=="SI"){
+				 			IAlumno aux3 = new DecoradorPromocion(a);
+				 			final=aux3;
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux3);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 		else{
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(a);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 			else{
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(a);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 	}
+				 }
+				 
+				 
+			}
+			
+		
+			return final;
+			
+		}
+		override public Comparable crearAleatorio(){
+			IAlumno final=((Alumno)base.crearAleatorio());
+			IAlumno decorador= new DecoradorLegajo( final);
+			IAlumno decorador2= new DecoradorLetras( decorador );
+			IAlumno decorador3= new DecoradorPromocion( decorador2 );
+			IAlumno decorador4= new DecoradorListado( decorador3 );
+			IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+
+			
+			
+		
+			return decorador5;
 			
 		}
 	}
+	
+	public class StudentsFactoryMuyEstudioso:FabricaDeAlumnosMuyEstudioso{
+		
+		
+		//tengo q retornar un IAlumno
+		
+		override public Comparable crearPorTeclado(){
+			
+			
+			IAlumno final=((AlumnoMuyEstudioso)base.crearAleatorio());
+			IAlumno a=((AlumnoMuyEstudioso)base.crearAleatorio());
+			string opcion;
+		
+			
+			Console.WriteLine("¿Desea agregar un decorado al student? ");
+			opcion =Console.ReadLine().ToUpper();
+			if(opcion=="SI")
+			{
+				Console.WriteLine("Desea que el alumno sea decorado con Legajo(SI/NO): ");
+				 string opcionLegajo =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Letras(SI/NO): ");
+				 string opcionLetras =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Promocion(SI/NO): ");
+				 string opcionPromocion =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Listado(SI/NO): ");
+				 string opcionListado =Console.ReadLine().ToUpper();
+				 Console.WriteLine("Desea que el alumno sea decorado con Asterisco(SI/NO): ");
+				 string opcionAsterisco =Console.ReadLine().ToUpper();
+				 
+				 if(opcionLegajo=="SI"){
+				 	IAlumno aux= new DecoradorLegajo(a);
+				 	final=aux;
+				 	if(opcionLetras=="SI")
+				 	{
+				 		IAlumno aux2= new DecoradorLetras(aux);
+				 		final=aux2;
+				 		if(opcionPromocion=="SI"){
+				 			IAlumno aux3 = new DecoradorPromocion(aux2);
+				 			final=aux3;
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux3);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 	}
+				 }
+				 else{
+				 	if(opcionLetras=="SI")
+				 	{
+				 		IAlumno aux2= new DecoradorLetras(a);
+				 		final=aux2;
+				 		if(opcionPromocion=="SI"){
+				 			IAlumno aux3 = new DecoradorPromocion(aux2);
+				 			final=aux3;
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux3);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 	}
+				 	else{
+				 		if(opcionPromocion=="SI"){
+				 			IAlumno aux3 = new DecoradorPromocion(a);
+				 			final=aux3;
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(aux3);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 		else{
+				 			if(opcionListado=="SI"){
+				 				IAlumno aux4= new DecoradorListado(a);
+				 				final=aux4;
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(aux4);
+				 					final=aux5;
+				 				}
+				 			}
+				 			else{
+				 				if(opcionAsterisco=="SI"){
+				 					IAlumno aux5= new DecoradorAsterisco(a);
+				 					final=aux5;
+				 				}
+				 			}
+				 		}
+				 	}
+				 }
+				 
+				 
+			}
+			
+		
+			return final;
+			
+		}
+		override public Comparable crearAleatorio(){
+			IAlumno final=((AlumnoMuyEstudioso)base.crearAleatorio());
+			IAlumno decorador= new DecoradorLegajo( final);
+			IAlumno decorador2= new DecoradorLetras( decorador );
+			IAlumno decorador3= new DecoradorPromocion( decorador2 );
+			IAlumno decorador4= new DecoradorListado( decorador3 );
+			IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+
+			
+			
+		
+			return decorador5;
+			
+		}
+	}
+	
 	public class FabricaDeVendedores:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();

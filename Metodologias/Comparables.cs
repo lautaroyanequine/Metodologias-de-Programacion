@@ -102,7 +102,7 @@ namespace Semana1
 		//Paso 3 - Modificar el contexto. Strategy
 		
 		//3.1 Conposicion entre contexto y estrategia
-		private CompararAlumnos estrategia; //Patron Strategy- variable para elegir el algoritmo de comparacion
+		private CompararAlumnos estrategia,estrategia2; //Patron Strategy- variable para elegir el algoritmo de comparacion
 		
 		public Alumno(string n,int d,int l,int p):base(n,d)
 		{
@@ -111,6 +111,7 @@ namespace Semana1
 			
 			//3.2 Crear un estrategia por defecto
 			estrategia= new PorCalificacion();  //Comparacion por Legajo por defecto. Antiguedad
+			estrategia2=new PorDni();;
 		}
 		public int getLegajo(){
 			return legajo;
@@ -143,7 +144,7 @@ namespace Semana1
 		//Paso 4-Delegar la responsabilidad a la estrategia
 		override public bool sosIgual(Comparable x){
 //			return this.getLegajo == ((Alumno)x).getLegajo;			
-			return estrategia.compararIgual(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
+			return estrategia2.compararIgual(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
 		}
 		override public bool sosMenor(Comparable x){
 			//return this.getLegajo < ((Alumno)x).getLegajo;
@@ -191,44 +192,12 @@ namespace Semana1
 	
 	//Adapter
 	//Paso 1. Crear el adaptador
-	public class AlumnoAdapter:Student{//Subclase del objetivo. En este caso Student
-		//Paso 1. 1 Tener una composicion al adaptable
-		IAlumno alumno; //Adaptable.El adaptador tiene una instancia de la clase que se desea adaptar
-		
-		public AlumnoAdapter(IAlumno a){
-			alumno=a;
-		}
-		public IAlumno Alumno{
-			get{return alumno;}
-		}
-		
-		//Paso 1.2 Hcaer la traduccion de todos los metodos de objetivo al
-		//Correspondiente adaptable
-		
-		public string getName(){
-			return alumno.getNombre();
-		}
-		public int yourAnswerIs(int question){
-			return alumno.responderPregunta(question);
-		}
-		public void setScore(int score){
-			alumno.setCalificacion(score);
-		}
-		public string showResult(){
-			return alumno.mostrarCalificacion();
-		}
-		public bool equals(Student student){
-			return alumno.sosIgual(    ((Comparable)((AlumnoAdapter)student).Alumno)      );
-			
-			
-		}
-		public bool lessThan(Student student){
-			return alumno.sosMenor(   ((Comparable)((AlumnoAdapter)student).Alumno)     );
-		}
-		public bool greaterThan(Student student){
-			return alumno.sosMayor(   ((Comparable)((AlumnoAdapter)student).Alumno)     );
-		}
-	}
+
+	
+
+	
+	
+	
 	
 	public class Vendedor : Persona,IObservado{  //Sujeto o Observado
 		protected int sueldoBaisco;

@@ -85,9 +85,23 @@ namespace Semana1
 			return max;
 		}
 		
+		public void ordenar(){
+			
+		Comparable c= datos[0];
+		for(int i = 1; i<this.cuantos(); i++){
+			if(c.sosMenor(datos[i]))
+			   {
+				   	Comparable aux=datos[0];
+				   	datos[0]=datos[i];
+				   	datos[i]=aux;
+				}
+			}
+		
+		}
+		
 		//El coleccionable es el responsable de ejecutar el iterador correcto.
 		public IteradorDePaginas crearIterador(){
-			return new IterarListaAlumno(datos);
+			return new IterarLista(datos);
 		}
 		
 		
@@ -222,6 +236,21 @@ namespace Semana1
 			return max;
 		}		
 		
+		
+		public void ordenar(){
+			
+		Comparable c= datos[0];
+		for(int i = 1; i<this.cuantos(); i++){
+			if(c.sosMenor(datos[i]))
+			   {
+				   	Comparable aux=datos[0];
+				   	datos[0]=datos[i];
+				   	datos[i]=aux;
+				}
+			}
+		
+		}
+		
 		//El coleccionable es el responsable de ejecutar el iterador correcto.
 		public IteradorDePaginas crearIterador(){
 			return new IterarLista(datos);
@@ -277,6 +306,13 @@ namespace Semana1
 			if(pila.contiene(c) || cola.contiene(c))
 				aux=true;
 			return aux;
+		}
+		
+		public void ordenar(){
+			
+			cola.ordenar();
+			pila.ordenar();;
+		
 		}
 		public IteradorDePaginas crearIterador(){
 			return new IterarColeccionMultiple(pila,cola);
@@ -340,6 +376,21 @@ namespace Semana1
 
 		public List<Comparable> Datos{
 			get{ return datos;}
+		}
+		
+		
+		public void ordenar(){
+			
+		Comparable c= datos[0];
+		for(int i = 1; i<this.cuantos(); i++){
+			if(c.sosMenor(datos[i]))
+			   {
+				   	Comparable aux=datos[0];
+				   	datos[0]=datos[i];
+				   	datos[i]=aux;
+				}
+			}
+		
 		}
 		
 		//El coleccionable es el responsable de ejecutar el iterador correcto.
@@ -463,7 +514,19 @@ namespace Semana1
 		}
 		
 
+			public void ordenar(){
+			
+		Comparable c= datos.Datos[0];
+		for(int i = 1; i<this.cuantos(); i++){
+			if(c.sosMenor(datos.Datos[i]))
+			   {
+				   	Comparable aux=datos.Datos[0];
+				   	datos.Datos[0]=datos.Datos[i];
+				   	datos.Datos[i]=aux;
+				}
+			}
 		
+		}
 		//El coleccionable es el responsable de ejecutar el iterador correcto.
 		public IteradorDePaginas crearIterador(){
 			return new IterarLista(valores);
