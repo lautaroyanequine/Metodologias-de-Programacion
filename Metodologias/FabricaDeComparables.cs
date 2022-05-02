@@ -33,6 +33,8 @@ namespace Semana1
 					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
 					case 6: fabrica = new StudentsFactory(); break;
 					case 7: fabrica = new StudentsFactoryMuyEstudioso(); break;
+					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
+					case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
 				
 			}
 			return fabrica.crearAleatorio();
@@ -49,6 +51,8 @@ namespace Semana1
 					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
 					case 6: fabrica = new StudentsFactory(); break;
 					case 7: fabrica = new StudentsFactoryMuyEstudioso(); break;
+					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
+					case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
 			}
 			return fabrica.crearPorTeclado();
 		}
@@ -133,7 +137,47 @@ namespace Semana1
 			return a;
 		}
 	}
-	
+	public class FabricaDeProxyAlumnos:FabricaDeComparables{
+		private AlumnoProxy a1,a2;
+		override public Comparable crearAleatorio(){
+			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
+			a1= new AlumnoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+			return a1;
+		}
+		override public Comparable crearPorTeclado(){
+			LectorDeDatos l = new LectorDeDatos();
+			Console.WriteLine("Ingrese nombre y apellido: ");
+			string nombre= l.stringPorTeclado();
+			Console.WriteLine("Ingrese DNI: ");
+			int dni= l.numeroPorTeclado();
+			Console.WriteLine("Ingrese Legajo: ");
+			int legajo= l.numeroPorTeclado();	
+			Console.WriteLine("Ingrese Promedio: ");
+			int promedio= l.numeroPorTeclado();
+			a2 = new AlumnoProxy(nombre,dni,legajo,promedio);
+			return a2;
+		}
+	}
+	public class FabricaDeProxyAlumnosMuyEstudioso:FabricaDeComparables{
+			override public Comparable crearAleatorio(){
+			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
+			AlumnoMuyEstudiosoProxy a= new AlumnoMuyEstudiosoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+			return a;
+		}
+		override public Comparable crearPorTeclado(){
+			LectorDeDatos l = new LectorDeDatos();
+			Console.WriteLine("Ingrese nombre y apellido: ");
+			string nombre= l.stringPorTeclado();
+			Console.WriteLine("Ingrese DNI: ");
+			int dni= l.numeroPorTeclado();
+			Console.WriteLine("Ingrese Legajo: ");
+			int legajo= l.numeroPorTeclado();	
+			Console.WriteLine("Ingrese Promedio: ");
+			int promedio= l.numeroPorTeclado();
+			AlumnoMuyEstudiosoProxy a = new AlumnoMuyEstudiosoProxy(nombre,dni,legajo,promedio);
+			return a;
+		}
+	}
 	public class StudentsFactory:FabricaDeAlumnos{
 		
 		

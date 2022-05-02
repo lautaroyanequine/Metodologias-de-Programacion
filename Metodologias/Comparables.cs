@@ -172,7 +172,7 @@ namespace Semana1
 			return ("Nombre: "+this.getNombre()+"  "+"| Calificacion: "+this.getCalificacion().ToString() );
 		}
 		
-			override public string ToString(){
+		override public string ToString(){
 			return ("Nombre: "+this.getNombre()+"| Dni: "+this.getDni().ToString()+"| Legajo: "+this.getLegajo().ToString()+"| Promedio: "+this.getPromedio().ToString() );
 		}
 				
@@ -187,6 +187,30 @@ namespace Semana1
 		public override int responderPregunta(int pregunta)
 		{
 			return pregunta%3;
+		}
+	}
+	
+	
+	public class Aula{
+		Teacher teacher;
+		
+		
+		
+		public void comenzar(){
+			Console.WriteLine("Comenzo el aula");
+			teacher=new Teacher();
+		}
+		
+		
+		public void nuevoAlumno(Comparable a ){
+			
+			AlumnoAdapter alumnoAdaptado= new AlumnoAdapter(  ((IAlumno)a)  );
+			teacher.goToClass(alumnoAdaptado);
+		}
+		
+		
+		public void claseLista(){
+			teacher.teachingAClass();
 		}
 	}
 	

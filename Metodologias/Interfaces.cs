@@ -27,7 +27,7 @@ namespace Semana1
 	 
 	 	//Ejercicio 3
 
-	 public interface Coleccionable : iterable{
+	 public interface Coleccionable : iterable,Ordenable{
 	 		
 	 		// Los coleccionables van a tener que saber y declarar como iterar sus elementos
 		int cuantos();
@@ -115,7 +115,31 @@ namespace Semana1
 		string mostrarCalificacion();
 		string ToString();
 	}
+	
+	
+	//Comand
+	public interface OrdenEnAula1{
+		//La interface IOrden la podemos implementar como una interface con un único método ejecutar
+		void ejecutar();
+	}
 	 	
+		
+	public interface OrdenEnAula2{
+		//La interface IOrden la podemos implementar como una interface con un único método ejecutar
+		void ejecutar(Comparable comparable);
+	}
+	
+	
+	
+	public interface Ordenable{
+		void setOrdenInicio(OrdenEnAula1 or);
+		void setOrdenLlegaAlumno(OrdenEnAula2 or);
+		void setOrdenAulaLlena(OrdenEnAula1 or);
+		
+		
+		
+	}
+	
 	
 		 	
 }

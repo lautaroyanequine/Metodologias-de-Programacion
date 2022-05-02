@@ -308,26 +308,56 @@ namespace Semana1
 			agregarStudents(t);
 			t.teachingAClass();
 		
-			*/
 			
+			*/
 	
 
 	//Ejercicio 8
-	
-			Console.WriteLine("Practica 4 | Ejercicio 8: ");
-			Teacher t= new Teacher();
-			agregarStudents(t);
-			t.teachingAClass();
+	/*
+	Console.WriteLine("Practica 4 | Ejercicio 8: ");
+	Teacher t= new Teacher();
+	agregarStudents(t);
+	t.teachingAClass();*/
 			
 	//Ejercicio 9
-	
+	/*
 	Console.WriteLine("Practica 4 | Ejercicio 9: ");
 	Coleccionable c =elegirColeccionable();
 	Teacher t1 = new Teacher();
 	t1.setStudents( new IterableAdapter(c));
 	agregarStudents(t1);
-	t1.teachingAClass();
+	t1.teachingAClass();*/
+	
+//*************************     P R A C T I C A   N 5   ************************************************************************************************
+
+
+
+	//Ejercio 2
+	/*
+	Console.WriteLine("Practica 5 | Ejercicio 2: ");
+	Teacher t1= new Teacher();
+	agregarStudents(t1);
+	t1.teachingAClass();*/
+	
+	//Ejercicio 10
+	
+	
+	Console.WriteLine("Practica 5 | Ejercicio 10: ");
 		
+	Coleccionable c =elegirColeccionable();
+	
+	
+	
+	Aula aula = new Aula();
+	c.setOrdenInicio(new OrdenInicio(aula));
+	c.setOrdenLlegaAlumno(new OrdenLlegaAlumno(aula));
+	c.setOrdenAulaLlena(  new OrdenAulaLlena(aula));
+	llenar(c,3);
+	llenar(c,5);
+	
+	
+	
+	
 		
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
@@ -336,7 +366,7 @@ namespace Semana1
 		
 				//Ejercicio 5
 		private static void llenar(Coleccionable c,int queOpcion){
-				for(int i=0; i <7;i++)
+				for(int i=0; i <20;i++)
 				{
 					Comparable comp= FabricaDeComparables.crearAleatorio(queOpcion);
 					c.agregar(comp);
@@ -492,7 +522,7 @@ namespace Semana1
 				if(i<11){
 					//Crea alumn
 					
-					Comparable comp= FabricaDeComparables.crearAleatorio(6);
+					Comparable comp= FabricaDeComparables.crearAleatorio(8);
 					/*
 					IAlumno decorador= new DecoradorLegajo( ((Alumno)comp) );
 					IAlumno decorador2= new DecoradorLetras( decorador );
@@ -513,7 +543,7 @@ namespace Semana1
 					IAlumno decorador5= new DecoradorAsterisco(decorador4 );
 					Student student2= new AlumnoAdapter( decorador5 );*/
 					//Por el momento solo con aleatorio(completo)
-					Comparable comp= FabricaDeComparables.crearAleatorio(7);
+					Comparable comp= FabricaDeComparables.crearAleatorio(9);
 					Student s2 = new AlumnoAdapter( ((IAlumno)comp)   );
 					t.goToClass(s2);
 				}

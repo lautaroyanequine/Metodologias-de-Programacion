@@ -20,11 +20,14 @@ namespace Semana1
 	//Ejercicio 4
 	
 	//Paso 4 : Hcaer que los agregados implementen Iterable
-	public class Cola  : Coleccionable,iterable
+	public class Cola  : Coleccionable,iterable,Ordenable
 	{
 
 		
 		private List<Comparable> datos;
+		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
+		private OrdenEnAula2 OrdenLlegaAlumno;
+		
 		public Cola(){
 			datos=new List<Comparable>();
 		}
@@ -33,6 +36,7 @@ namespace Semana1
 			get{ return datos;}
 		}
 		public void encolar(Comparable elem) {
+
 			this.datos.Add(elem);
 		}
 	
@@ -61,6 +65,15 @@ namespace Semana1
 		}
 		public void agregar( Comparable c){
 			encolar(c);
+			
+			if(OrdenInicio != null)
+				OrdenInicio.ejecutar();
+			if(OrdenLlegaAlumno != null)
+				OrdenLlegaAlumno.ejecutar(c);
+			
+			if (OrdenAulaLlena !=null && datos.Count ==40)
+				OrdenAulaLlena.ejecutar();
+
 		}
 		
 		public Comparable minimo(){
@@ -105,6 +118,16 @@ namespace Semana1
 		}
 		
 		
+		
+		public void setOrdenInicio(OrdenEnAula1 or){
+			OrdenInicio=or;
+		}
+		public void setOrdenLlegaAlumno(OrdenEnAula2 or){
+			OrdenLlegaAlumno=or;
+		}
+		public void setOrdenAulaLlena(OrdenEnAula1 or){
+			OrdenAulaLlena=or;
+		}
 	}
 	//Por si se requiere forma que reciba un coleccionable IterarAlumno
 	/*
@@ -161,8 +184,10 @@ namespace Semana1
 //		
 //	}
 	*/
-	public class Pila : Coleccionable,iterable{
+	public class Pila : Coleccionable,iterable,Ordenable{
 		private List<Comparable> datos;
+		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
+		private OrdenEnAula2 OrdenLlegaAlumno;
 		public Pila(){
 			datos= new List<Comparable>();
 		}
@@ -170,6 +195,7 @@ namespace Semana1
 		public void apilar(Comparable elem)   
 		{
 			datos.Add(elem);
+			
 		}
 		public Comparable desapilar()
 		{
@@ -206,6 +232,13 @@ namespace Semana1
 		}
 		public void agregar( Comparable c){
 			apilar(c);
+			if(OrdenInicio != null)
+				OrdenInicio.ejecutar();
+			if(OrdenLlegaAlumno != null)
+				OrdenLlegaAlumno.ejecutar(c);
+			
+			if (OrdenAulaLlena !=null && datos.Count ==40)
+				OrdenAulaLlena.ejecutar();
 		}
 		public Comparable minimo(){
 //			Comparable min=datos[0];
@@ -256,14 +289,26 @@ namespace Semana1
 			return new IterarLista(datos);
 		}
 		
+				
+		public void setOrdenInicio(OrdenEnAula1 or){
+			OrdenInicio=or;
+		}
+		public void setOrdenLlegaAlumno(OrdenEnAula2 or){
+			OrdenLlegaAlumno=or;
+		}
+		public void setOrdenAulaLlena(OrdenEnAula1 or){
+			OrdenAulaLlena=or;
+		}
 			
 	}
 	
-	public class ColeccionMultiple : Coleccionable,iterable
+	public class ColeccionMultiple : Coleccionable,iterable,Ordenable
 	{
 		Random r= new Random();
 		Pila pila;
 		Cola cola;
+		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
+		private OrdenEnAula2 OrdenLlegaAlumno;
 		
 		public ColeccionMultiple(Pila p,Cola c){
 			pila=p;
@@ -295,9 +340,27 @@ namespace Semana1
 			int num=r.Next(2);
 			//Guarda de manera aleatoria
 			if(num ==0)
+			{
 				pila.agregar(c);
+			if(OrdenInicio != null)
+				OrdenInicio.ejecutar();
+			if(OrdenLlegaAlumno != null)
+				OrdenLlegaAlumno.ejecutar(c);
+			
+			if (OrdenAulaLlena !=null && this.cuantos() ==40)
+				OrdenAulaLlena.ejecutar();
+			}
 			else 
+			{
 				cola.agregar(c);
+			if(OrdenInicio != null)
+				OrdenInicio.ejecutar();
+			if(OrdenLlegaAlumno != null)
+				OrdenLlegaAlumno.ejecutar(c);
+			
+			if (OrdenAulaLlena !=null && this.cuantos() ==40)
+				OrdenAulaLlena.ejecutar();
+			}
 			return;
 		}
 		
@@ -318,13 +381,27 @@ namespace Semana1
 			return new IterarColeccionMultiple(pila,cola);
 		}
 		
+		
+		public void setOrdenInicio(OrdenEnAula1 or){
+			OrdenInicio=or;
+		}
+		public void setOrdenLlegaAlumno(OrdenEnAula2 or){
+			OrdenLlegaAlumno=or;
+		}
+		public void setOrdenAulaLlena(OrdenEnAula1 or){
+			OrdenAulaLlena=or;
+		}
 	}
 	
-	public class Conjunto : Coleccionable,iterable{
+	public class Conjunto : Coleccionable,iterable,Ordenable{
 		
 		//Almacena metodos sin repeticion
 		
 		private List<Comparable> datos;
+		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
+		private OrdenEnAula2 OrdenLlegaAlumno;
+		
+		
 		public Conjunto(){
 			datos= new List<Comparable>();
 		}
@@ -332,7 +409,18 @@ namespace Semana1
 		public void agregar(Comparable x){
 			//agrega el elemento al conjunto si es que éste no existe
 			if(!contiene(x))
-				datos.Add(x);
+			{
+			datos.Add(x);
+			if(OrdenInicio != null)
+				OrdenInicio.ejecutar();
+			if(OrdenLlegaAlumno != null)
+				OrdenLlegaAlumno.ejecutar(x);
+			
+			if (OrdenAulaLlena !=null && datos.Count ==40)
+				OrdenAulaLlena.ejecutar();
+			}
+				
+			
 			
 		}
 		
@@ -397,10 +485,20 @@ namespace Semana1
 		public IteradorDePaginas crearIterador(){
 			return new IterarLista(datos);
 		}
+		
+		public void setOrdenInicio(OrdenEnAula1 or){
+			OrdenInicio=or;
+		}
+		public void setOrdenLlegaAlumno(OrdenEnAula2 or){
+			OrdenLlegaAlumno=or;
+		}
+		public void setOrdenAulaLlena(OrdenEnAula1 or){
+			OrdenAulaLlena=or;
+		}
 	}
 	
 
-	public class Diccionario : Coleccionable,iterable{
+	public class Diccionario : Coleccionable,iterable,Ordenable{
 		
 		//Coleccion de elementos,donde cada elemento tiene una clave asociada.Las claves no pueden repetirse
 		
@@ -408,6 +506,8 @@ namespace Semana1
 		private Conjunto datos; // Almacena ClaveValor en un Conjunto
 		private List<Comparable> valores; //Almacena solo los valores. Se va a iterar sobre esto
 		private Random r = new Random();
+		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
+		private OrdenEnAula2 OrdenLlegaAlumno;
 		
 		
 		public Diccionario(){
@@ -452,6 +552,13 @@ namespace Semana1
 		
 			agregar(n,valor);
 			
+			if(OrdenInicio != null)
+				OrdenInicio.ejecutar();
+			if(OrdenLlegaAlumno != null)
+				OrdenLlegaAlumno.ejecutar(valor);
+			
+			if (OrdenAulaLlena !=null && datos.cuantos() ==40)
+				OrdenAulaLlena.ejecutar();
 
 		}
 			
@@ -530,6 +637,17 @@ namespace Semana1
 		//El coleccionable es el responsable de ejecutar el iterador correcto.
 		public IteradorDePaginas crearIterador(){
 			return new IterarLista(valores);
+		}
+		
+		
+		public void setOrdenInicio(OrdenEnAula1 or){
+			OrdenInicio=or;
+		}
+		public void setOrdenLlegaAlumno(OrdenEnAula2 or){
+			OrdenLlegaAlumno=or;
+		}
+		public void setOrdenAulaLlena(OrdenEnAula1 or){
+			OrdenAulaLlena=or;
 		}
 	}
 	
