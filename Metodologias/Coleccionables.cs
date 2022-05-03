@@ -20,11 +20,12 @@ namespace Semana1
 	//Ejercicio 4
 	
 	//Paso 4 : Hcaer que los agregados implementen Iterable
-	public class Cola  : Coleccionable,iterable,Ordenable
+	public class Cola  : Coleccionable,iterable,Ordenable,IObservado
 	{
 
 		
 		private List<Comparable> datos;
+		private List <IObservador> observadores = new List<IObservador>();
 		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
 		private OrdenEnAula2 OrdenLlegaAlumno;
 		
@@ -73,6 +74,7 @@ namespace Semana1
 			
 			if (OrdenAulaLlena !=null && datos.Count ==40)
 				OrdenAulaLlena.ejecutar();
+			this.notificar();
 
 		}
 		
@@ -127,6 +129,21 @@ namespace Semana1
 		}
 		public void setOrdenAulaLlena(OrdenEnAula1 or){
 			OrdenAulaLlena=or;
+		}
+		
+		
+		public void agregarObservador(IObservador o){
+			observadores.Add(o);
+		}
+		public void eliminarObservador(IObservador o){
+			observadores.Remove(o);
+		}
+		
+		public void notificar(){
+			foreach (IObservador o in observadores)
+			{
+				o.actualizar(this);
+			}
 		}
 	}
 	//Por si se requiere forma que reciba un coleccionable IterarAlumno

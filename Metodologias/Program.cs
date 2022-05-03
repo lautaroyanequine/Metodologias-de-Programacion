@@ -341,7 +341,7 @@ namespace Semana1
 	
 	//Ejercicio 10
 	
-	
+	/*
 	Console.WriteLine("Practica 5 | Ejercicio 10: ");
 		
 	Coleccionable c =elegirColeccionable();
@@ -355,10 +355,34 @@ namespace Semana1
 	llenar(c,3);
 	llenar(c,5);
 	
+	*/
+	
+	//Ejercicio 12
+	/*
+	Coleccionable cola = new ColaProxy();
+	Console.WriteLine(cola.cuantos());
+	Console.WriteLine(cola.minimo());
+	Console.WriteLine(cola.maximo());
+	
+	cola.agregar(new Numero (5));
+	cola.agregar(new Numero (3));
+	cola.agregar(new Numero (8));
+	Console.WriteLine(cola.cuantos());
+	Console.WriteLine(cola.minimo());
+	Console.WriteLine(cola.maximo());
 	
 	
-	
-		
+	Console.WriteLine(cola.cuantos());
+	Console.WriteLine(cola.minimo());
+	Console.WriteLine(cola.maximo());
+	Numero n= new Numero(15);
+	cola.agregar(n);
+	Console.WriteLine(cola.minimo());
+	Console.WriteLine(cola.maximo());
+	n.setValor(1);
+	Console.WriteLine(cola.minimo());
+	Console.WriteLine(cola.maximo());
+		*/
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}

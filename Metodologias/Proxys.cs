@@ -132,4 +132,100 @@ namespace Semana1
 			
 		}
 	}
+	
+	
+	
+	public class ColaProxy:Coleccionable,IObservador{
+		Cola colaReal;
+		Comparable min =null;
+		Comparable max = null;
+		
+		
+		
+		
+		
+		public void agregarObservador(){
+			if(colaReal==null){
+				colaReal=new Cola();
+			}
+			colaReal.agregarObservador(this);
+		}
+		
+		
+		public void actualizar(IObservado o){
+			this.actualizarMinYMax();
+		}
+		
+		
+		public int cuantos(){
+			
+			if(colaReal==null)
+				return 0;
+		
+			return colaReal.cuantos();
+		}
+		public bool contiene( Comparable c){
+			if(colaReal==null)
+				return false;
+			return colaReal.contiene(c);
+		}
+		
+		
+		
+		public Comparable minimo(){
+			
+			
+			return min;
+			
+			
+		}
+		
+		public void actualizarMinYMax(){
+			min=colaReal.minimo();
+			max=colaReal.maximo();
+		}
+		public Comparable maximo(){
+			
+			
+			return max;
+		}
+		public void agregar(Comparable c){
+			if(colaReal == null){
+				colaReal = new Cola();
+			}
+			this.agregarObservador();
+			colaReal.agregar(c);
+		}
+		public void ordenar(){
+			
+		}
+		
+		public IteradorDePaginas crearIterador(){
+			if(colaReal == null){
+				colaReal = new Cola();
+			}
+			return colaReal.crearIterador();
+		}
+		
+		public void setOrdenInicio(OrdenEnAula1 or){
+				if(colaReal == null){
+				colaReal = new Cola();
+			}
+			colaReal.setOrdenInicio(or);
+		}
+		public void setOrdenLlegaAlumno(OrdenEnAula2 or){
+			if(colaReal == null){
+				colaReal = new Cola();
+			}
+			colaReal.setOrdenLlegaAlumno(or);
+		}
+		public void setOrdenAulaLlena(OrdenEnAula1 or){
+			if(colaReal == null){
+				colaReal = new Cola();
+			}
+			colaReal.setOrdenAulaLlena(or);
+		}
+		
+		
+	}
 }

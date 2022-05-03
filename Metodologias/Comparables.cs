@@ -14,10 +14,10 @@ namespace Semana1
 	/// <summary>
 	/// Description of Comparables.
 	/// </summary>
-	public class Numero : Comparable
+	public class Numero : Comparable,IObservado
 	{
 		private int valor;
-		
+		List <IObservador> observadores= new List<IObservador>();
 		
 		public Numero(int num){
 			this.valor=num;
@@ -27,6 +27,10 @@ namespace Semana1
 			get {
 				return valor;
 			}
+		}
+		public void setValor(int c){
+			valor=c;
+			this.notificar();
 		}
 		
 		public bool sosIgual(Comparable c){
@@ -59,7 +63,19 @@ namespace Semana1
 			return ("Numero: "+" " +this.getValor.ToString());
 		}
 		
+		public void agregarObservador(IObservador o){
+			observadores.Add(o);
+		}
+		public void eliminarObservador(IObservador o){
+			observadores.Remove(o);
+		}
 		
+		public void notificar(){
+			foreach (IObservador o in observadores)
+			{
+				o.actualizar(this);
+			}
+		}
 		
 	}
 	
