@@ -31,10 +31,10 @@ namespace Semana1
 					case 3: fabrica = new FabricaDeAlumnos(); break;
 					case 4 : fabrica = new FabricaDeVendedores(); break;
 					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
-					case 6: fabrica = new StudentsFactory(); break;
-					case 7: fabrica = new StudentsFactoryMuyEstudioso(); break;
+					case 6: fabrica = new FabricaDeAlumnosDecorados(); break;
+					case 7: fabrica = new FabricaDeAlumnosMuyEstudiosoDecorados(); break;
 					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
-					case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
+				//	case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
 				
 			}
 			return fabrica.crearAleatorio();
@@ -49,10 +49,10 @@ namespace Semana1
 					case 3: fabrica = new FabricaDeAlumnos(); break;
 					case 4: fabrica = new FabricaDeVendedores(); break;
 					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
-					case 6: fabrica = new StudentsFactory(); break;
-					case 7: fabrica = new StudentsFactoryMuyEstudioso(); break;
+					case 6: fabrica = new FabricaDeAlumnosDecorados(); break;
+					case 7: fabrica = new FabricaDeAlumnosMuyEstudiosoDecorados(); break;
 					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
-					case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
+				//	case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
 			}
 			return fabrica.crearPorTeclado();
 		}
@@ -141,7 +141,7 @@ namespace Semana1
 		private AlumnoProxy a1,a2;
 		override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			a1= new AlumnoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+			a1= new AlumnoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10),6);
 			return a1;
 		}
 		override public Comparable crearPorTeclado(){
@@ -154,11 +154,11 @@ namespace Semana1
 			int legajo= l.numeroPorTeclado();	
 			Console.WriteLine("Ingrese Promedio: ");
 			int promedio= l.numeroPorTeclado();
-			a2 = new AlumnoProxy(nombre,dni,legajo,promedio);
+			a2 = new AlumnoProxy(nombre,dni,legajo,promedio,3);
 			return a2;
 		}
 	}
-	public class FabricaDeProxyAlumnosMuyEstudioso:FabricaDeComparables{
+/*	public class FabricaDeProxyAlumnosMuyEstudioso:FabricaDeComparables{
 			override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
 			AlumnoMuyEstudiosoProxy a= new AlumnoMuyEstudiosoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
@@ -177,8 +177,8 @@ namespace Semana1
 			AlumnoMuyEstudiosoProxy a = new AlumnoMuyEstudiosoProxy(nombre,dni,legajo,promedio);
 			return a;
 		}
-	}
-	public class StudentsFactory:FabricaDeAlumnos{
+	}*/
+	public class FabricaDeAlumnosDecorados:FabricaDeAlumnos{
 		
 		
 		//tengo q retornar un IAlumno
@@ -310,7 +310,7 @@ namespace Semana1
 		}
 	}
 	
-	public class StudentsFactoryMuyEstudioso:FabricaDeAlumnosMuyEstudioso{
+	public class FabricaDeAlumnosMuyEstudiosoDecorados:FabricaDeAlumnosMuyEstudioso{
 		
 		
 		//tengo q retornar un IAlumno

@@ -41,14 +41,26 @@ namespace Semana1
 		virtual public int getLegajo(){
 			return adicional.getLegajo();
 		}
+		virtual public void setLegajo(int c){
+			adicional.setLegajo(c);
+		}
 		virtual public int getDni(){
 			return adicional.getDni();
+		}
+		virtual public void setDni(int c){
+			adicional.setDni(c);
 		}
 		virtual public int getPromedio(){
 			return adicional.getPromedio();
 		}
+		virtual public void setPromedio(int c){
+			adicional.setPromedio(c);
+		}
 		virtual public string getNombre(){
 			return adicional.getNombre();
+		}
+		virtual public void setNombre(string c){
+			adicional.setNombre(c);
 		}
 		virtual public int getCalificacion(){
 			return adicional.getCalificacion();

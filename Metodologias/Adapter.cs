@@ -14,11 +14,50 @@ namespace Semana1
 	/// <summary>
 	/// Description of Adapter.
 	/// </summary>
-		public class AlumnoAdapter:Student{//Subclase del objetivo. En este caso Student
+	public class AlumnoAdapter:Student{//Subclase del objetivo. En este caso Student
 		//Paso 1. 1 Tener una composicion al adaptable
 		IAlumno alumno; //Adaptable.El adaptador tiene una instancia de la clase que se desea adaptar
 		
 		public AlumnoAdapter(IAlumno a){
+			alumno=a;
+		}
+		public IAlumno Alumno{
+			get{return alumno;}
+		}
+		
+		//Paso 1.2 Hcaer la traduccion de todos los metodos de objetivo al
+		//Correspondiente adaptable
+		
+		public string getName(){
+			return alumno.getNombre();
+		}
+		public int yourAnswerIs(int question){
+			return alumno.responderPregunta(question);
+		}
+		public void setScore(int score){
+			alumno.setCalificacion(score);
+		}
+		public string showResult(){
+			return alumno.mostrarCalificacion();
+		}
+		public bool equals(Student student){
+			return alumno.sosIgual(    ((Comparable)((AlumnoAdapter)student).Alumno)      );
+			
+			
+		}
+		public bool lessThan(Student student){
+			return alumno.sosMenor(   ((Comparable)((AlumnoAdapter)student).Alumno)     );
+		}
+		public bool greaterThan(Student student){
+			return alumno.sosMayor(   ((Comparable)((AlumnoAdapter)student).Alumno)     );
+		}
+	}
+	
+	public class AlumnoCompuestoAdapter:Student{//Subclase del objetivo. En este caso Student
+		//Paso 1. 1 Tener una composicion al adaptable
+		AlumnoCompuesto alumno; //Adaptable.El adaptador tiene una instancia de la clase que se desea adaptar
+		
+		public AlumnoCompuestoAdapter(AlumnoCompuesto a){
 			alumno=a;
 		}
 		public IAlumno Alumno{

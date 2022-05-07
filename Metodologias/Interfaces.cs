@@ -101,9 +101,14 @@ namespace Semana1
 		//meter todos los metodos q neceistamos para la implementacion
 		//Equivale a la componente -superclase
 		int getLegajo();
+		void setLegajo(int l);
+		
 		int getDni();
+		void setDni(int d);
 		int getPromedio();
+		void setPromedio(int p);
 		string getNombre();
+		void setNombre(string n);
 		void setCalificacion(int c);
 		int getCalificacion();
 		void cambiarEstrategia(CompararAlumnos a);
@@ -117,7 +122,9 @@ namespace Semana1
 	}
 	
 	
-	//Comand
+	//Command
+	//Paso 1 . Crear la superclase(Interface)
+	
 	public interface OrdenEnAula1{
 		//La interface IOrden la podemos implementar como una interface con un único método ejecutar
 		void ejecutar();
@@ -130,6 +137,7 @@ namespace Semana1
 	}
 	
 	
+
 	
 	public interface Ordenable{
 		void setOrdenInicio(OrdenEnAula1 or);

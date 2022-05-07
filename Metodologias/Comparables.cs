@@ -129,45 +129,57 @@ namespace Semana1
 			estrategia= new PorCalificacion();  //Comparacion por Legajo por defecto. Antiguedad
 			estrategia2=new PorDni();;
 		}
-		public int getLegajo(){
+		virtual public int getLegajo(){
 			return legajo;
 		}
-		public int getCalificacion(){
+		virtual public void setLegajo(int l){
+			legajo=l;
+		}
+		virtual public int getCalificacion(){
 			return calificacion;
 			
 		}
-		 public string getNombre(){
+		 virtual public string getNombre(){
 			return nombre;
 		}
-		 public int getDni(){
+		virtual public void setNombre(string s){
+			nombre=s;
+		}
+		virtual public int getDni(){
 			return dni;
 		}
-		public int getPromedio(){
+		virtual public void setDni(int d){
+			dni=d;
+		}
+		virtual public int getPromedio(){
 			return promedio;
 		}
-		public void setCalificacion(int c){
+		virtual public void setPromedio(int pro){
+			promedio=pro;
+		}
+		virtual public void setCalificacion(int c){
 			calificacion=c;
 		}
 	
 		
 		//Patron Strategy. Metodo para cambiar el algoritmo de comparacion
 		//3.3 Mecanismo para cambiar estrategia
-		public void cambiarEstrategia(CompararAlumnos a){
+		virtual public void cambiarEstrategia(CompararAlumnos a){
 			estrategia=a; 
 		}
 		
 		//Ejercicio 18
 		//Paso 4-Delegar la responsabilidad a la estrategia
-		override public bool sosIgual(Comparable x){
+		 override public bool sosIgual(Comparable x){
 //			return this.getLegajo == ((Alumno)x).getLegajo;			
 			return estrategia2.compararIgual(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
 		}
-		override public bool sosMenor(Comparable x){
+		 override public bool sosMenor(Comparable x){
 			//return this.getLegajo < ((Alumno)x).getLegajo;
 			return estrategia.compararMenor(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.
 							
 		}
-		override public bool sosMayor(Comparable x){
+		 override public bool sosMayor(Comparable x){
 //			return this.getLegajo > ((Alumno)x).getLegajo;	
 			return estrategia.compararMayor(this,((IAlumno)x));  //Con Patron Strategy delega la tarea de comparacion a la estrategia.		
 		}
@@ -184,11 +196,11 @@ namespace Semana1
 			return r.Next(1,4);
 		}
 		//Comportamiento de base
-		public string mostrarCalificacion(){
+		 virtual public string mostrarCalificacion(){
 			return ("Nombre: "+this.getNombre()+"  "+"| Calificacion: "+this.getCalificacion().ToString() );
 		}
 		
-		override public string ToString(){
+		 override public string ToString(){
 			return ("Nombre: "+this.getNombre()+"| Dni: "+this.getDni().ToString()+"| Legajo: "+this.getLegajo().ToString()+"| Promedio: "+this.getPromedio().ToString() );
 		}
 				
@@ -208,10 +220,10 @@ namespace Semana1
 	
 	
 	public class Aula{
+		
+		//Recpetor-Commandr
 		Teacher teacher;
-		
-		
-		
+			
 		public void comenzar(){
 			Console.WriteLine("Comenzo el aula");
 			teacher=new Teacher();

@@ -13,19 +13,23 @@ namespace Semana1
 	/// <summary>
 	/// Description of Command.
 	/// </summary>
+	/// 
+	//Paso 2 .Crear las subclases
 	public class OrdenInicio:OrdenEnAula1
 	{
-		Aula aula;
-		private static int vecesInvocada=0;
+		
+//		
+		//Otro objeto q sepa quien es el receptor y que mensaje enviar.
+		private Aula aula;
+		
 		
 		public  OrdenInicio(Aula a){
 			aula=a;
 		}
 		
 		public void ejecutar( ){
-			if(vecesInvocada==0)
-			{aula.comenzar();}
-			vecesInvocada++;
+				aula.comenzar();
+		
 		}
 		
 		

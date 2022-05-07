@@ -67,7 +67,7 @@ namespace Semana1
 		public void agregar( Comparable c){
 			encolar(c);
 			
-			if(OrdenInicio != null)
+			if(datos.Count==1 && OrdenInicio != null) 
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(c);
@@ -202,9 +202,14 @@ namespace Semana1
 //	}
 	*/
 	public class Pila : Coleccionable,iterable,Ordenable{
+		
+		//Invocador= Coleccionables 
 		private List<Comparable> datos;
-		private OrdenEnAula1 OrdenInicio,OrdenAulaLlena;
-		private OrdenEnAula2 OrdenLlegaAlumno;
+		
+		//Paso 3 Modificar al invocador.
+		
+		private OrdenEnAula1 OrdenInicio=null,OrdenAulaLlena=null;
+		private OrdenEnAula2 OrdenLlegaAlumno=null;
 		public Pila(){
 			datos= new List<Comparable>();
 		}
@@ -249,7 +254,13 @@ namespace Semana1
 		}
 		public void agregar( Comparable c){
 			apilar(c);
-			if(OrdenInicio != null)
+			
+			//Hacer algo adicional desconocido
+			//Nesecito recibir codigo por parametro
+			//Paso 4 Invocar las ordenes cuando corresponda
+			
+					
+			if(datos.Count==1 && OrdenInicio != null) 
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(c);
@@ -359,7 +370,8 @@ namespace Semana1
 			if(num ==0)
 			{
 				pila.agregar(c);
-			if(OrdenInicio != null)
+					
+			if(this.cuantos()==1 && OrdenInicio != null)
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(c);
@@ -370,7 +382,7 @@ namespace Semana1
 			else 
 			{
 				cola.agregar(c);
-			if(OrdenInicio != null)
+			if(this.cuantos()==1 && OrdenInicio != null)
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(c);
@@ -428,7 +440,8 @@ namespace Semana1
 			if(!contiene(x))
 			{
 			datos.Add(x);
-			if(OrdenInicio != null)
+			
+			if(this.cuantos()==1 && OrdenInicio != null)
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(x);
@@ -569,7 +582,7 @@ namespace Semana1
 		
 			agregar(n,valor);
 			
-			if(OrdenInicio != null)
+			if(this.cuantos()==1 && OrdenInicio != null)
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(valor);
