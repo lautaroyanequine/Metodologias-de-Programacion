@@ -388,10 +388,12 @@ namespace Semana1
 	
 
 	//ejercio 2
-	
-	Console.WriteLine("Practica 6 | Ejercicio 2: ");
+	/*
+// Con composicion	Adapter->Compuesto->proxy -> Alumno
+	Console.WriteLine("Practica 6 | Ejercicio 2: (Adapter->Compuesto->proxy -> Alumno)");
 	Teacher t1= new Teacher();
-	AlumnoCompuesto a= new AlumnoCompuesto("Lautaro",2,1,7);
+	AlumnoCompuesto a= new AlumnoCompuesto();
+	//PROXY 
 	IAlumno comp1 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
 	IAlumno comp2 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
 	IAlumno comp3 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
@@ -407,7 +409,134 @@ namespace Semana1
 		
 	t1.teachingAClass();
 	
+	*/
 
+	// con composicion
+	//	AlumnoAdapter ->Decoradores ->Compuesto -> Proxy ->  Alumno
+	/*
+	Console.WriteLine(" ");
+	Console.WriteLine("Practica 6 | Ejercicio 2: (AlumnoAdapter ->Decoradores ->Compuesto -> Proxy ->  Alumno)");
+	Teacher t2= new Teacher();
+	AlumnoCompuesto aC= new AlumnoCompuesto();
+	//PROXY 
+	IAlumno comp11 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp22 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp33 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp44 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp55 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	aC.agregarHijo(comp11);
+	aC.agregarHijo(comp22);
+	aC.agregarHijo(comp33);
+	aC.agregarHijo(comp44);
+	aC.agregarHijo(comp55);
+	IAlumno decorador= new DecoradorLegajo(aC);
+	IAlumno decorador2= new DecoradorLetras(decorador);
+	IAlumno decorador3= new DecoradorPromocion(decorador2);
+	IAlumno decorador4= new DecoradorListado(decorador3);
+	IAlumno decorador5= new DecoradorAsterisco(decorador4);
+	
+	AlumnoCompuestoAdapter aaa= new AlumnoCompuestoAdapter( ( (IAlumno)decorador5) );
+	t2.goToClass(aaa);
+		
+	t2.teachingAClass();
+	*/
+	
+//	Esto se podria hacer en fabrica de Compuestos,pero por el momento se dejo de esta manera para que sea mas general
+	
+	
+
+		Console.WriteLine("Practica 6 | Ejercicio 4 y 5  ");
+		
+		Console.WriteLine("El jugador que saque el 1 de oro perdera");
+		Console.WriteLine(" ");
+		
+		Persona p1=new Persona("Lautaro",1);
+		Persona p2 = new Persona("Federico",2);
+		
+		JuegoDeCartas jg= new Sacar1deOro(p1,p2);
+		
+		Console.WriteLine("EL GANADOR ES: "+jg.jugar(p1,p2).getNombre);
+		Console.WriteLine(" ");
+		
+		Console.WriteLine("******************************************************************************************* ");
+		
+		Console.WriteLine("Practica 6 | Ejercicio 6  ");
+		Console.WriteLine("El jugador que tenga la carta mas alta,sumara puntos.Al llegar a los 3 ganara la partida");
+		JuegoDeCartas may= new Mayor(p1,p2);
+		
+	
+		
+		Console.WriteLine("EL GANADOR ES : "+may.jugar(p1,p2).getNombre);
+		
+		
+		
+		
+		//Si quiero que el juego se gane por puntos tengo q modificiar el metodo chequear ganador y a la sumo la clase del juego de cartas.
+		//Si se quiere agregar mas personas habria que modificar la plantilla.
+		
+	
+	
+//	Ejercicio 8
+		/*
+	Console.WriteLine(" ");
+	Console.WriteLine("Practica 6 | Ejercicio 8: ");
+	Console.WriteLine("TORNEO DE SACAR 1 DE ORO");
+	Console.WriteLine(" ");
+	Persona persona1 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona2 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona3 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona4 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona5 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona6 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona7 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona8 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona9 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona10 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona11 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona12 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona13 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona14 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona15 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	Persona persona16 =( (Persona)FabricaDeComparables.crearAleatorio(2));
+	
+	
+	ITorneo final = new Encuentro();
+	ITorneo semi1 = new Encuentro();
+	ITorneo semi2 = new Encuentro();
+	ITorneo cuartos1 = new Encuentro();
+	ITorneo cuartos2 = new Encuentro();
+	ITorneo cuartos3 = new Encuentro();
+	ITorneo cuartos4 = new Encuentro();
+
+	((Encuentro)final).agregarHijo(semi1);
+	((Encuentro)final).agregarHijo(semi2);
+	 
+	((Encuentro)semi1).agregarHijo(cuartos1);
+	((Encuentro)semi1).agregarHijo(cuartos2);
+	((Encuentro)semi2).agregarHijo(cuartos3);
+	((Encuentro)semi2).agregarHijo(cuartos4);
+	
+	((Encuentro)cuartos1).agregarHijo(new Sacar1deOro(persona1,persona2));
+	((Encuentro)cuartos1).agregarHijo(new Sacar1deOro(persona3,persona4));
+	
+	
+	((Encuentro)cuartos2).agregarHijo(new Sacar1deOro(persona5,persona6));
+	((Encuentro)cuartos2).agregarHijo(new Sacar1deOro(persona7,persona8));
+	
+	((Encuentro)cuartos3).agregarHijo(new Sacar1deOro(persona9,persona10));
+	((Encuentro)cuartos3).agregarHijo(new Sacar1deOro(persona11,persona12));
+	
+	((Encuentro)cuartos4).agregarHijo(new Sacar1deOro(persona13,persona14));
+	((Encuentro)cuartos4).agregarHijo(new Sacar1deOro(persona15,persona16));
+	
+	
+	
+	
+	Console.WriteLine( "Ganador del toreno: " + final.jugar().getNombre);
+
+	*/
+
+	
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}

@@ -163,8 +163,11 @@ namespace Semana1
 		virtual public int responderPregunta(int pregunta){
 			if(alumnoReal ==null){
 				//alumnoReal = new Alumno(nombre,dni,legajo,promedio);
-				if(vecesCreada>20)
-					queCrear=7;
+				if(vecesCreada%2==0)
+					queCrear=5;
+				else{
+					queCrear=3;
+				}
 				
 				alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
 				vecesCreada++;

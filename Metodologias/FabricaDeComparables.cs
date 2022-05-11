@@ -34,7 +34,8 @@ namespace Semana1
 					case 6: fabrica = new FabricaDeAlumnosDecorados(); break;
 					case 7: fabrica = new FabricaDeAlumnosMuyEstudiosoDecorados(); break;
 					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
-				//	case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
+					case 9: fabrica = new FabricaDeAlumnosCompuesto(); break;
+				
 				
 			}
 			return fabrica.crearAleatorio();
@@ -52,7 +53,7 @@ namespace Semana1
 					case 6: fabrica = new FabricaDeAlumnosDecorados(); break;
 					case 7: fabrica = new FabricaDeAlumnosMuyEstudiosoDecorados(); break;
 					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
-				//	case 9: fabrica = new FabricaDeProxyAlumnosMuyEstudioso(); break;
+					case 9: fabrica = new FabricaDeAlumnosCompuesto(); break;
 			}
 			return fabrica.crearPorTeclado();
 		}
@@ -82,7 +83,7 @@ namespace Semana1
 	public class FabricaDePersonas:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			Persona a= new Persona(g.stringAleatorio(8),g.numeroAleatorio(50000000));
+			Persona a= new Persona(g.nombresAleatorio(),g.numeroAleatorio(50000000));
 			return a;
 		}
 		override public Comparable crearPorTeclado(){
@@ -117,6 +118,18 @@ namespace Semana1
 			return a2;
 		}
 	}
+	
+	public class FabricaDeAlumnosCompuesto:FabricaDeComparables{
+			override public Comparable crearAleatorio(){
+			
+			return new AlumnoCompuesto();
+		}
+		override public Comparable crearPorTeclado(){
+			return new AlumnoCompuesto();
+		}
+	}
+	
+
 	public class FabricaDeAlumnosMuyEstudioso:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
@@ -141,7 +154,7 @@ namespace Semana1
 		private AlumnoProxy a1,a2;
 		override public Comparable crearAleatorio(){
 			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			a1= new AlumnoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10),6);
+			a1= new AlumnoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10),3);
 			return a1;
 		}
 		override public Comparable crearPorTeclado(){

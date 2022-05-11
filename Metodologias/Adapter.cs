@@ -55,9 +55,9 @@ namespace Semana1
 	
 	public class AlumnoCompuestoAdapter:Student{//Subclase del objetivo. En este caso Student
 		//Paso 1. 1 Tener una composicion al adaptable
-		AlumnoCompuesto alumno; //Adaptable.El adaptador tiene una instancia de la clase que se desea adaptar
+		IAlumno alumno; //Adaptable.El adaptador tiene una instancia de la clase que se desea adaptar
 		
-		public AlumnoCompuestoAdapter(AlumnoCompuesto a){
+		public AlumnoCompuestoAdapter(IAlumno a){
 			alumno=a;
 		}
 		public IAlumno Alumno{
