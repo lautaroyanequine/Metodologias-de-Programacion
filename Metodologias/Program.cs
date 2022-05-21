@@ -340,7 +340,6 @@ namespace Semana1
 	t1.teachingAClass();
 	*/
 	//Ejercicio 10
-	
 	/*
 	Console.WriteLine("Practica 5 | Ejercicio 10: ");
 		
@@ -355,8 +354,8 @@ namespace Semana1
 	//Se crea Proxys de Alumnos
 	llenar(c,8);
 	llenar(c,8);
+*/
 	
-	*/
 	
 	//Ejercicio 12
 	/*
@@ -388,8 +387,9 @@ namespace Semana1
 	
 
 	//ejercio 2
-	/*
+	
 // Con composicion	Adapter->Compuesto->proxy -> Alumno
+/*
 	Console.WriteLine("Practica 6 | Ejercicio 2: (Adapter->Compuesto->proxy -> Alumno)");
 	Teacher t1= new Teacher();
 	AlumnoCompuesto a= new AlumnoCompuesto();
@@ -404,13 +404,13 @@ namespace Semana1
 	a.agregarHijo(comp3);
 	a.agregarHijo(comp4);
 	a.agregarHijo(comp5);
-	AlumnoCompuestoAdapter aa= new AlumnoCompuestoAdapter(a);
+	AlumnoAdapter aa= new AlumnoAdapter(a);
 	t1.goToClass(aa);
 		
 	t1.teachingAClass();
 	
-	*/
-
+	
+*/
 	// con composicion
 	//	AlumnoAdapter ->Decoradores ->Compuesto -> Proxy ->  Alumno
 	/*
@@ -443,7 +443,7 @@ namespace Semana1
 	
 //	Esto se podria hacer en fabrica de Compuestos,pero por el momento se dejo de esta manera para que sea mas general
 	
-	
+/*	
 
 		Console.WriteLine("Practica 6 | Ejercicio 4 y 5  ");
 		
@@ -474,7 +474,7 @@ namespace Semana1
 		//Si quiero que el juego se gane por puntos tengo q modificiar el metodo chequear ganador y a la sumo la clase del juego de cartas.
 		//Si se quiere agregar mas personas habria que modificar la plantilla.
 		
-	
+	*/
 	
 //	Ejercicio 8
 		/*
@@ -535,8 +535,74 @@ namespace Semana1
 	Console.WriteLine( "Ganador del toreno: " + final.jugar().getNombre);
 
 	*/
-
 	
+	
+	//*************************     P R A C T I C A   N 7   ************************************************************************************************	
+	//* ERRO EN CONVERTIR DOUBLE A INT, Q PUEDO HACER?
+	/*
+	Console.WriteLine("Practica 7 | Ejercicio 3: (Adapter->Compuesto->proxy -> Alumno)");
+	Teacher t1= new Teacher();
+	AlumnoCompuesto a= new AlumnoCompuesto();
+	//PROXY 
+	
+	//cinco Alumno generando datos aleatoriamente
+	IAlumno comp1 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp2 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp3 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp4 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp5 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	Student student1= new AlumnoAdapter( ((IAlumno) comp1)  );
+	Student student2= new AlumnoAdapter( ((IAlumno) comp2)  );
+	Student student3= new AlumnoAdapter( ((IAlumno) comp3)  );
+	Student student4= new AlumnoAdapter( ((IAlumno) comp4)  );
+	Student student5= new AlumnoAdapter( ((IAlumno) comp5)  );
+	
+	//ADAPTER-PROXY-decoraod.ALUMNO
+	
+	//Muy estudisio por el proxy
+	IAlumno comp6 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp7 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	Student student6= new AlumnoAdapter( ((IAlumno) comp6)  );
+	Student student7= new AlumnoAdapter( ((IAlumno) comp7)  );
+	
+	
+	AlumnoCompuesto aC= new AlumnoCompuesto();
+	IAlumno comp11 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp22 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp33 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp44 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp55 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	aC.agregarHijo(comp11);
+	aC.agregarHijo(comp22);
+	aC.agregarHijo(comp33);
+	aC.agregarHijo(comp44);
+	aC.agregarHijo(comp55);
+	IAlumno decorador= new DecoradorLegajo(aC);
+	IAlumno decorador2= new DecoradorLetras(decorador);
+	IAlumno decorador3= new DecoradorPromocion(decorador2);
+	IAlumno decorador4= new DecoradorListado(decorador3);
+	IAlumno decorador5= new DecoradorAsterisco(decorador4);
+	
+	AlumnoAdapter aaa= new AlumnoAdapter( ( (IAlumno)decorador5) );
+
+		
+	
+
+	t1.goToClass(student1);
+	t1.goToClass(student2);
+	t1.goToClass(student3);
+	t1.goToClass(student4);
+	t1.goToClass(student5);
+	t1.goToClass(student6);
+	t1.goToClass(student7);
+						
+	t1.goToClass(aaa);
+		
+	t1.teachingAClass();
+	
+	*/
+	
+
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
@@ -550,7 +616,8 @@ namespace Semana1
 					c.agregar(comp);
 				}
 					
-			}
+			
+				}
 		
 		
 		//Ejercicio 6

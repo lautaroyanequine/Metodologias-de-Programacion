@@ -582,7 +582,7 @@ namespace Semana1
 		
 			agregar(n,valor);
 			
-			if(this.cuantos()==1 && OrdenInicio != null)
+			if(datos.cuantos()==1 && OrdenInicio != null)
 				OrdenInicio.ejecutar();
 			if(OrdenLlegaAlumno != null)
 				OrdenLlegaAlumno.ejecutar(valor);

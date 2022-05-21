@@ -72,6 +72,7 @@ namespace Semana1
 	 		Comparable crearAleatorio();
 	 		
 	 		Comparable crearPorTeclado();
+	 		Comparable crearAleatorioDesdeArchivo();
 	}
 	
 	public interface IFabricaDeColeccionables{
@@ -147,6 +148,8 @@ namespace Semana1
 		
 		
 	}
+	
+
 	
 	
 		 	

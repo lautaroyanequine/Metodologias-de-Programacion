@@ -21,7 +21,7 @@ namespace Semana1
 		public static int vecesCreada=0;//Para cambiar a estudios "solo"
 		protected CompararAlumnos estrategia,estrategia2;
 		
-		private int queCrear=0;
+		private int queCrear=7;
 		/*3 Alumno
 		 * 5 Alumno Muy estudioso
 		 * 6 Alumno decorado
@@ -79,7 +79,7 @@ namespace Semana1
 			alumnoReal.setPromedio(o);
 		}
 		public string getNombre(){
-			return nombre;
+			return this.nombre;
 		}
 		
 		public void setNombre(string n){
@@ -113,12 +113,29 @@ namespace Semana1
 			//Si sabemos el orden de los metodos no haria falta,como en etste caso		
 			if(alumnoReal ==null)
 			{
-				alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
-				alumnoReal.setCalificacion(calificacion);
-				alumnoReal.setDni(dni);
-				alumnoReal.setLegajo(legajo);
-				alumnoReal.setNombre(nombre);
-				alumnoReal.setPromedio(promedio);
+				if(vecesCreada>=5 && vecesCreada<7)
+					queCrear=7;
+				else{
+					queCrear=6;
+				}
+				if(queCrear==7){
+					alumnoReal = ((IAlumno)FabricaDeComparables.crearPorTeclado(queCrear));
+					this.setNombre(alumnoReal.getNombre());
+					this.setDni(alumnoReal.getDni());
+					this.setLegajo(alumnoReal.getLegajo());
+					this.setPromedio(alumnoReal.getPromedio());
+				}
+				else
+				{
+						alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
+						alumnoReal.setCalificacion(calificacion);
+						alumnoReal.setDni(dni);
+						alumnoReal.setLegajo(legajo);
+						alumnoReal.setNombre(nombre);
+						alumnoReal.setPromedio(promedio);
+				}
+				vecesCreada++;
+
 //				
 				Console.WriteLine("Se creo Alumno real");
 			}
@@ -127,14 +144,35 @@ namespace Semana1
 			return alumnoReal.sosIgual(x);//Delegamos la  peticion
 		}
 		override public bool sosMenor(Comparable x){
-			if(alumnoReal ==null)
+			if(alumnoReal ==null )
 			{
-				alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
-				alumnoReal.setCalificacion(calificacion);
-				alumnoReal.setDni(dni);
-				alumnoReal.setLegajo(legajo);
-				alumnoReal.setNombre(nombre);
-				alumnoReal.setPromedio(promedio);
+		
+				
+				if(vecesCreada>=5 && vecesCreada<7)
+					queCrear=7;
+				else{
+					queCrear=6;
+				}
+				if(queCrear==7){
+					alumnoReal = ((IAlumno)FabricaDeComparables.crearPorTeclado(queCrear));
+					this.setNombre(alumnoReal.getNombre());
+					this.setDni(alumnoReal.getDni());
+					this.setLegajo(alumnoReal.getLegajo());
+					this.setPromedio(alumnoReal.getPromedio());
+				}
+				else
+				{
+						alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
+						alumnoReal.setCalificacion(calificacion);
+						alumnoReal.setDni(dni);
+						alumnoReal.setLegajo(legajo);
+						alumnoReal.setNombre(nombre);
+						alumnoReal.setPromedio(promedio);
+				}
+
+				vecesCreada++;
+
+
 //				
 				Console.WriteLine("Se creo Alumno real");
 			}
@@ -143,13 +181,28 @@ namespace Semana1
 			return alumnoReal.sosMenor(x);
 		}
 		override public bool sosMayor(Comparable x){
-			if(alumnoReal ==null){
-				alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
-				alumnoReal.setCalificacion(calificacion);
-				alumnoReal.setDni(dni);
-				alumnoReal.setLegajo(legajo);
-				alumnoReal.setNombre(nombre);
-				alumnoReal.setPromedio(promedio);
+			if(alumnoReal ==null && vecesCreada<7){
+				
+				if(vecesCreada>=5)
+					queCrear=7;
+				else{
+					queCrear=6;
+				}
+				if(queCrear==7){
+					alumnoReal = ((IAlumno)FabricaDeComparables.crearPorTeclado(queCrear));
+				}
+				else
+				{
+						alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
+						alumnoReal.setCalificacion(calificacion);
+						alumnoReal.setDni(dni);
+						alumnoReal.setLegajo(legajo);
+						alumnoReal.setNombre(nombre);
+						alumnoReal.setPromedio(promedio);
+				}
+
+				vecesCreada++;
+
 //				
 				Console.WriteLine("Se creo Alumno real");
 			}
@@ -162,20 +215,29 @@ namespace Semana1
 		//Metodo complicado,el proxy necesita crear al objeto real
 		virtual public int responderPregunta(int pregunta){
 			if(alumnoReal ==null){
-				//alumnoReal = new Alumno(nombre,dni,legajo,promedio);
-				if(vecesCreada%2==0)
-					queCrear=5;
+				if(vecesCreada>=5 && vecesCreada<7)
+					queCrear=7;
 				else{
-					queCrear=3;
+					queCrear=6;
 				}
-				
-				alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
+				if(queCrear==7){
+					alumnoReal = ((IAlumno)FabricaDeComparables.crearPorTeclado(queCrear));
+					this.setNombre(alumnoReal.getNombre());
+					this.setDni(alumnoReal.getDni());
+					this.setLegajo(alumnoReal.getLegajo());
+					this.setPromedio(alumnoReal.getPromedio());
+				}
+				else
+				{
+					alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
+					alumnoReal.setCalificacion(calificacion);
+					alumnoReal.setDni(dni);
+					alumnoReal.setLegajo(legajo);
+					alumnoReal.setNombre(nombre);
+					alumnoReal.setPromedio(promedio);
+				}
 				vecesCreada++;
-				alumnoReal.setCalificacion(calificacion);
-				alumnoReal.setDni(dni);
-				alumnoReal.setLegajo(legajo);
-				alumnoReal.setNombre(nombre);
-				alumnoReal.setPromedio(promedio);
+
 //				
 				Console.WriteLine("Se creo Alumno real");
 			}
@@ -185,8 +247,13 @@ namespace Semana1
 		}
 	
 		public string mostrarCalificacion(){
-			if(alumnoReal ==null)
-			return ("Nombre: "+this.getNombre()+"  "+"| Calificacion: "+this.getCalificacion().ToString() );
+			if(alumnoReal ==null){
+				alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
+				alumnoReal.setCalificacion(calificacion);
+				alumnoReal.setDni(dni);
+				alumnoReal.setLegajo(legajo);
+				alumnoReal.setNombre(nombre);
+				alumnoReal.setPromedio(promedio);}//return ("Nombre: "+this.getNombre()+"  "+"| Calificacion: "+this.getCalificacion().ToString() );
 			return alumnoReal.mostrarCalificacion();
 		}
 		

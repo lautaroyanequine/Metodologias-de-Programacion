@@ -19,6 +19,16 @@ namespace Semana1
 	//Paso 1 Clase abstracta de fabricas
 	
 	abstract public class FabricaDeComparables:IFabricaDeComparable {
+		
+		protected Manejador generador;
+		protected Manejador lector;
+		protected Manejador lectorArchivos ;
+		
+		public FabricaDeComparables(){
+			generador = new GeneradorDeDatosAleatorios(null);
+			lector = new LectorDeDatos(generador);
+			lectorArchivos = new LectorDeArchivos(lector);
+		}
 		//Paso 1.1 Metodo de clase.Static
 		
 		public static Comparable crearAleatorio(int queProducto){
@@ -58,41 +68,74 @@ namespace Semana1
 			return fabrica.crearPorTeclado();
 		}
 		
+		public static Comparable crearAleatorioDesdeArchivo(int queProducto){
+			//Crear una fabrica concreta que sepa crear el tipo de producto que nos piden
+			FabricaDeComparables fabrica = null;
+			switch(queProducto){
+					//No crea productos,sabe y crea la fabrica concreta que sabe crear ese producto
+					case 1: fabrica = new FabricaDeNumeros(); break;
+					case 2: fabrica = new FabricaDePersonas(); break;
+					case 3: fabrica = new FabricaDeAlumnos(); break;
+					case 4 : fabrica = new FabricaDeVendedores(); break;
+					case 5: fabrica = new FabricaDeAlumnosMuyEstudioso(); break;
+					case 6: fabrica = new FabricaDeAlumnosDecorados(); break;
+					case 7: fabrica = new FabricaDeAlumnosMuyEstudiosoDecorados(); break;
+					case 8: fabrica = new FabricaDeProxyAlumnos(); break;
+					case 9: fabrica = new FabricaDeAlumnosCompuesto(); break;
+				
+				
+			}
+			return fabrica.crearAleatorio();
+		}
+		
 		//Paso 1.2 Metodo de instancia
 		
 		
 		abstract public Comparable crearAleatorio(); //Toda jerarquia completa tiene que saber crear el producto
 		abstract public Comparable crearPorTeclado();
+		abstract public Comparable crearAleatorioDesdeArchivo();
 	}
 	//Gemelos Fabricas y productos- uno a uno
 	//Paso 2. SubClases de Fabricas
 	
 	public class FabricaDeNumeros:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
-			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			Numero n= new Numero(g.numeroAleatorio(100));
+			//Paso 3 implementarlo en el cliente
+			Numero n= new Numero(lectorArchivos.numeroAleatorio(100));
 			return n;
 		}
 		override public Comparable crearPorTeclado(){
-			LectorDeDatos l = new LectorDeDatos();
+			Manejador g=new LectorDeDatos(null);
+			g=new GeneradorDeDatosAleatorios(g);
 			Console.WriteLine("Ingrese un numero: ");
-			Numero n = new Numero(l.numeroPorTeclado());
+			Numero n = new Numero(g.numeroPorTeclado());
+			return n;
+		}
+		override public Comparable crearAleatorioDesdeArchivo(){
+			Numero n= new Numero((int)(lectorArchivos.numeroDesdeArchivo(100)));
 			return n;
 		}
 	}
 	public class FabricaDePersonas:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
-			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			Persona a= new Persona(g.nombresAleatorio(),g.numeroAleatorio(50000000));
+		
+			Persona a= new Persona(lectorArchivos.nombresAleatorio(),lectorArchivos.numeroAleatorio(50000000));
 			return a;
 		}
 		override public Comparable crearPorTeclado(){
-			LectorDeDatos l = new LectorDeDatos();
+
+
 			Console.WriteLine("Ingrese nombre y apellido: ");
-			string nombre= l.stringPorTeclado();
+			string nombre= lectorArchivos.stringPorTeclado();
 			Console.WriteLine("Ingrese DNI: ");
-			int dni= l.numeroPorTeclado();
+			int dni= lectorArchivos.numeroPorTeclado();
 			Persona a = new Persona(nombre,dni);
+			return a;
+		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+
+			Persona a= new Persona(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50000000)));
 			return a;
 		}
 		
@@ -100,22 +143,29 @@ namespace Semana1
 	public class FabricaDeAlumnos:FabricaDeComparables{
 		protected Alumno a1,a2;
 		override public Comparable crearAleatorio(){
-			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			a1= new Alumno(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+	
+			a1= new Alumno(lectorArchivos.nombresAleatorio(),lectorArchivos.numeroAleatorio(50000000),lectorArchivos.numeroAleatorio(8000),lectorArchivos.numeroAleatorio(10));
 			return a1;
 		}
 		override public Comparable crearPorTeclado(){
-			LectorDeDatos l = new LectorDeDatos();
+	
 			Console.WriteLine("Ingrese nombre y apellido: ");
-			string nombre= l.stringPorTeclado();
+			string nombre= lectorArchivos.stringPorTeclado();
 			Console.WriteLine("Ingrese DNI: ");
-			int dni= l.numeroPorTeclado();
+			int dni= lectorArchivos.numeroPorTeclado();
 			Console.WriteLine("Ingrese Legajo: ");
-			int legajo= l.numeroPorTeclado();	
+			int legajo= lectorArchivos.numeroPorTeclado();	
 			Console.WriteLine("Ingrese Promedio: ");
-			int promedio= l.numeroPorTeclado();
+			int promedio= lectorArchivos.numeroPorTeclado();
 			a2 = new Alumno(nombre,dni,legajo,promedio);
 			return a2;
+		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+
+
+			a1= new Alumno(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50000000)),(int)(lectorArchivos.numeroDesdeArchivo(8000)),(int)(lectorArchivos.numeroDesdeArchivo(10)));
+			return a1;
 		}
 	}
 	
@@ -127,48 +177,71 @@ namespace Semana1
 		override public Comparable crearPorTeclado(){
 			return new AlumnoCompuesto();
 		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+			
+			return new AlumnoCompuesto();
+		}
 	}
 	
 
 	public class FabricaDeAlumnosMuyEstudioso:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
-			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			AlumnoMuyEstudioso a= new AlumnoMuyEstudioso(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10));
+		
+			AlumnoMuyEstudioso a= new AlumnoMuyEstudioso(lectorArchivos.nombresAleatorio(),lectorArchivos.numeroAleatorio(50000000),lectorArchivos.numeroAleatorio(8000),lectorArchivos.numeroAleatorio(10));
 			return a;
 		}
 		override public Comparable crearPorTeclado(){
-			LectorDeDatos l = new LectorDeDatos();
+			
 			Console.WriteLine("Ingrese nombre y apellido: ");
-			string nombre= l.stringPorTeclado();
+			string nombre= lectorArchivos.stringPorTeclado();
 			Console.WriteLine("Ingrese DNI: ");
-			int dni= l.numeroPorTeclado();
+			int dni= lectorArchivos.numeroPorTeclado();
 			Console.WriteLine("Ingrese Legajo: ");
-			int legajo= l.numeroPorTeclado();	
+			int legajo= lectorArchivos.numeroPorTeclado();	
 			Console.WriteLine("Ingrese Promedio: ");
-			int promedio= l.numeroPorTeclado();
+			int promedio= lectorArchivos.numeroPorTeclado();
 			AlumnoMuyEstudioso a = new AlumnoMuyEstudioso(nombre,dni,legajo,promedio);
+			return a;
+		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+
+			AlumnoMuyEstudioso a= new AlumnoMuyEstudioso(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50000000)),(int)(lectorArchivos.numeroDesdeArchivo(8000)),(int)(lectorArchivos.numeroDesdeArchivo(10)));
 			return a;
 		}
 	}
 	public class FabricaDeProxyAlumnos:FabricaDeComparables{
 		private AlumnoProxy a1,a2;
 		override public Comparable crearAleatorio(){
-			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			a1= new AlumnoProxy(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(8000),g.numeroAleatorio(10),3);
+			
+			a1= new AlumnoProxy(lectorArchivos.nombresAleatorio(),lectorArchivos.numeroAleatorio(50000000),lectorArchivos.numeroAleatorio(8000),lectorArchivos.numeroAleatorio(10),6);
 			return a1;
 		}
 		override public Comparable crearPorTeclado(){
-			LectorDeDatos l = new LectorDeDatos();
+
 			Console.WriteLine("Ingrese nombre y apellido: ");
-			string nombre= l.stringPorTeclado();
+			string nombre= lectorArchivos.stringPorTeclado();
 			Console.WriteLine("Ingrese DNI: ");
-			int dni= l.numeroPorTeclado();
+			int dni= lectorArchivos.numeroPorTeclado();
 			Console.WriteLine("Ingrese Legajo: ");
-			int legajo= l.numeroPorTeclado();	
+			int legajo= lectorArchivos.numeroPorTeclado();	
 			Console.WriteLine("Ingrese Promedio: ");
-			int promedio= l.numeroPorTeclado();
+			int promedio= lectorArchivos.numeroPorTeclado();
 			a2 = new AlumnoProxy(nombre,dni,legajo,promedio,3);
 			return a2;
+		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+
+		
+			a1= new AlumnoProxy(
+				lectorArchivos.stringDesdeArchivo(10), 
+				Convert.ToInt32( lectorArchivos.numeroDesdeArchivo(503) ),
+			 	Convert.ToInt32( lectorArchivos.numeroDesdeArchivo(83) ),
+				Convert.ToInt32( lectorArchivos.numeroDesdeArchivo(12) ),
+				 3);
+			return a1;
 		}
 	}
 /*	public class FabricaDeProxyAlumnosMuyEstudioso:FabricaDeComparables{
@@ -197,118 +270,32 @@ namespace Semana1
 		//tengo q retornar un IAlumno
 		
 		override public Comparable crearPorTeclado(){
-			//Mejorar este codigo
-			IAlumno final=((Alumno)base.crearAleatorio());
-			IAlumno a=((Alumno)base.crearAleatorio());
-			string opcion;
-		
-			
-			Console.WriteLine("¿Desea agregar un decorado al student? ");
-			opcion =Console.ReadLine().ToUpper();
-			if(opcion=="SI")
-			{
-				Console.WriteLine("Desea que el alumno sea decorado con Legajo(SI/NO): ");
-				 string opcionLegajo =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Letras(SI/NO): ");
-				 string opcionLetras =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Promocion(SI/NO): ");
-				 string opcionPromocion =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Listado(SI/NO): ");
-				 string opcionListado =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Asterisco(SI/NO): ");
-				 string opcionAsterisco =Console.ReadLine().ToUpper();
-				 
-				 if(opcionLegajo=="SI"){
-				 	IAlumno aux= new DecoradorLegajo(a);
-				 	final=aux;
-				 	if(opcionLetras=="SI")
-				 	{
-				 		IAlumno aux2= new DecoradorLetras(aux);
-				 		final=aux2;
-				 		if(opcionPromocion=="SI"){
-				 			IAlumno aux3 = new DecoradorPromocion(aux2);
-				 			final=aux3;
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux3);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 	}
-				 }
-				 else{
-				 	if(opcionLetras=="SI")
-				 	{
-				 		IAlumno aux2= new DecoradorLetras(a);
-				 		final=aux2;
-				 		if(opcionPromocion=="SI"){
-				 			IAlumno aux3 = new DecoradorPromocion(aux2);
-				 			final=aux3;
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux3);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 			
-				 		}
-				 		else{
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux2);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 	}
-				 	else{
-				 		if(opcionListado=="SI"){
-				 			IAlumno aux3 = new DecoradorPromocion(a);
-				 			final=aux3;
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux3);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 		else{
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(a);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 			else{
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(a);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 	}
-				 }
-				 
-				 
-			}
-			
-		
-			return final;
+		IAlumno final=((Alumno)base.crearPorTeclado());
+			IAlumno decorador= new DecoradorLegajo( final);
+			IAlumno decorador2= new DecoradorLetras( decorador );
+			IAlumno decorador3= new DecoradorPromocion( decorador2 );
+			IAlumno decorador4= new DecoradorListado( decorador3 );
+			IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+			return decorador5;
 			
 		}
 		override public Comparable crearAleatorio(){
 			IAlumno final=((Alumno)base.crearAleatorio());
+			IAlumno decorador= new DecoradorLegajo( final);
+			IAlumno decorador2= new DecoradorLetras( decorador );
+			IAlumno decorador3= new DecoradorPromocion( decorador2 );
+			IAlumno decorador4= new DecoradorListado( decorador3 );
+			IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+
+			
+			
+		
+			return decorador5;
+			
+		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+			IAlumno final=((Alumno)base.crearAleatorioDesdeArchivo());
 			IAlumno decorador= new DecoradorLegajo( final);
 			IAlumno decorador2= new DecoradorLetras( decorador );
 			IAlumno decorador3= new DecoradorPromocion( decorador2 );
@@ -330,103 +317,14 @@ namespace Semana1
 		
 		override public Comparable crearPorTeclado(){
 			
+			IAlumno final=((Alumno)base.crearPorTeclado());
+			IAlumno decorador= new DecoradorLegajo( final);
+			IAlumno decorador2= new DecoradorLetras( decorador );
+			IAlumno decorador3= new DecoradorPromocion( decorador2 );
+			IAlumno decorador4= new DecoradorListado( decorador3 );
+			IAlumno decorador5= new DecoradorAsterisco(decorador4 );
 			
-			IAlumno final=((AlumnoMuyEstudioso)base.crearAleatorio());
-			IAlumno a=((AlumnoMuyEstudioso)base.crearAleatorio());
-			string opcion;
-		
-			
-			Console.WriteLine("¿Desea agregar un decorado al student? ");
-			opcion =Console.ReadLine().ToUpper();
-			if(opcion=="SI")
-			{
-				Console.WriteLine("Desea que el alumno sea decorado con Legajo(SI/NO): ");
-				 string opcionLegajo =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Letras(SI/NO): ");
-				 string opcionLetras =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Promocion(SI/NO): ");
-				 string opcionPromocion =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Listado(SI/NO): ");
-				 string opcionListado =Console.ReadLine().ToUpper();
-				 Console.WriteLine("Desea que el alumno sea decorado con Asterisco(SI/NO): ");
-				 string opcionAsterisco =Console.ReadLine().ToUpper();
-				 
-				 if(opcionLegajo=="SI"){
-				 	IAlumno aux= new DecoradorLegajo(a);
-				 	final=aux;
-				 	if(opcionLetras=="SI")
-				 	{
-				 		IAlumno aux2= new DecoradorLetras(aux);
-				 		final=aux2;
-				 		if(opcionPromocion=="SI"){
-				 			IAlumno aux3 = new DecoradorPromocion(aux2);
-				 			final=aux3;
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux3);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 	}
-				 }
-				 else{
-				 	if(opcionLetras=="SI")
-				 	{
-				 		IAlumno aux2= new DecoradorLetras(a);
-				 		final=aux2;
-				 		if(opcionPromocion=="SI"){
-				 			IAlumno aux3 = new DecoradorPromocion(aux2);
-				 			final=aux3;
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux3);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 	}
-				 	else{
-				 		if(opcionPromocion=="SI"){
-				 			IAlumno aux3 = new DecoradorPromocion(a);
-				 			final=aux3;
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(aux3);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 		else{
-				 			if(opcionListado=="SI"){
-				 				IAlumno aux4= new DecoradorListado(a);
-				 				final=aux4;
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(aux4);
-				 					final=aux5;
-				 				}
-				 			}
-				 			else{
-				 				if(opcionAsterisco=="SI"){
-				 					IAlumno aux5= new DecoradorAsterisco(a);
-				 					final=aux5;
-				 				}
-				 			}
-				 		}
-				 	}
-				 }
-				 
-				 
-			}
-			
-		
-			return final;
+			return decorador5;
 			
 		}
 		override public Comparable crearAleatorio(){
@@ -443,16 +341,32 @@ namespace Semana1
 			return decorador5;
 			
 		}
+		
+		override public Comparable crearAleatorioDesdeArchivo(){
+			IAlumno final=((AlumnoMuyEstudioso)base.crearAleatorioDesdeArchivo());
+			IAlumno decorador= new DecoradorLegajo( final);
+			IAlumno decorador2= new DecoradorLetras( decorador );
+			IAlumno decorador3= new DecoradorPromocion( decorador2 );
+			IAlumno decorador4= new DecoradorListado( decorador3 );
+			IAlumno decorador5= new DecoradorAsterisco(decorador4 );
+
+			
+			
+		
+			return decorador5;
+			
+		}
 	}
 	
 	public class FabricaDeVendedores:FabricaDeComparables{
 		override public Comparable crearAleatorio(){
-			GeneradorDeDatosAleatorios g=new GeneradorDeDatosAleatorios();
-			Vendedor a= new Vendedor(g.nombresAleatorio(),g.numeroAleatorio(50000000),g.numeroAleatorio(80000));
+		
+			Vendedor a= new Vendedor(lectorArchivos.nombresAleatorio(),lectorArchivos.numeroAleatorio(50000000),lectorArchivos.numeroAleatorio(80000));
 			return a;
 		}
 		override public Comparable crearPorTeclado(){
-			LectorDeDatos l = new LectorDeDatos();
+			Manejador l=new LectorDeDatos(null);
+			l=new GeneradorDeDatosAleatorios(l);
 			Console.WriteLine("Ingrese nombre y apellido: ");
 			string nombre= l.stringPorTeclado();
 			Console.WriteLine("Ingrese DNI: ");
@@ -460,6 +374,12 @@ namespace Semana1
 			Console.WriteLine("Ingrese Sueldo Basico: ");
 			int sb= l.numeroPorTeclado();
 			Vendedor a = new Vendedor(nombre,dni,sb);
+			return a;
+		}
+	
+		override public Comparable crearAleatorioDesdeArchivo(){
+	
+			Vendedor a= new Vendedor(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50000000)),(int)(lectorArchivos.numeroDesdeArchivo(80000)));
 			return a;
 		}
 		

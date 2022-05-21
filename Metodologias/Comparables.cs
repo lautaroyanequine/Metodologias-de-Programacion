@@ -127,7 +127,7 @@ namespace Semana1
 			
 			//3.2 Crear un estrategia por defecto
 			estrategia= new PorCalificacion();  //Comparacion por Legajo por defecto. Antiguedad
-			estrategia2=new PorDni();;
+			estrategia2=new PorDni();
 		}
 		virtual public int getLegajo(){
 			return legajo;
