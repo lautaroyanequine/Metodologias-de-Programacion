@@ -25,9 +25,9 @@ namespace Semana1
 		protected Manejador lectorArchivos ;
 		
 		public FabricaDeComparables(){
-			generador = new GeneradorDeDatosAleatorios(null);
+			generador = GeneradorDeDatosAleatorios.getInstance(null);
 			lector = new LectorDeDatos(generador);
-			lectorArchivos = new LectorDeArchivos(lector);
+			lectorArchivos =LectorDeArchivos.getInstance(lector);
 		}
 		//Paso 1.1 Metodo de clase.Static
 		
@@ -85,7 +85,7 @@ namespace Semana1
 				
 				
 			}
-			return fabrica.crearAleatorio();
+			return fabrica.crearAleatorioDesdeArchivo();
 		}
 		
 		//Paso 1.2 Metodo de instancia
@@ -105,10 +105,9 @@ namespace Semana1
 			return n;
 		}
 		override public Comparable crearPorTeclado(){
-			Manejador g=new LectorDeDatos(null);
-			g=new GeneradorDeDatosAleatorios(g);
+		
 			Console.WriteLine("Ingrese un numero: ");
-			Numero n = new Numero(g.numeroPorTeclado());
+			Numero n = new Numero(lectorArchivos.numeroPorTeclado());
 			return n;
 		}
 		override public Comparable crearAleatorioDesdeArchivo(){
@@ -164,7 +163,7 @@ namespace Semana1
 		override public Comparable crearAleatorioDesdeArchivo(){
 
 
-			a1= new Alumno(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50000000)),(int)(lectorArchivos.numeroDesdeArchivo(8000)),(int)(lectorArchivos.numeroDesdeArchivo(10)));
+			a1= new Alumno(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50)),(int)(lectorArchivos.numeroDesdeArchivo(8000)),(int)(lectorArchivos.numeroDesdeArchivo(10)));
 			return a1;
 		}
 	}
@@ -207,7 +206,7 @@ namespace Semana1
 		
 		override public Comparable crearAleatorioDesdeArchivo(){
 
-			AlumnoMuyEstudioso a= new AlumnoMuyEstudioso(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(50000000)),(int)(lectorArchivos.numeroDesdeArchivo(8000)),(int)(lectorArchivos.numeroDesdeArchivo(10)));
+			AlumnoMuyEstudioso a= new AlumnoMuyEstudioso(lectorArchivos.stringDesdeArchivo(10),(int)(lectorArchivos.numeroDesdeArchivo(500)),(int)(lectorArchivos.numeroDesdeArchivo(8000)),(int)(lectorArchivos.numeroDesdeArchivo(10)));
 			return a;
 		}
 	}
@@ -233,13 +232,22 @@ namespace Semana1
 		}
 		
 		override public Comparable crearAleatorioDesdeArchivo(){
-
-		
+			
+//			double a,b,c;
+//			a=lectorArchivos.numeroDesdeArchivo(5000000);
+//			b=lectorArchivos.numeroDesdeArchivo(1);
+//			c=lectorArchivos.numeroDesdeArchivo(1);
+//			int a2= ((int)a);
+//			Console.WriteLine(a);
+//			Console.WriteLine(b);
+//			Console.WriteLine(c);
+//			Console.WriteLine(a2);
+//			
 			a1= new AlumnoProxy(
 				lectorArchivos.stringDesdeArchivo(10), 
-				Convert.ToInt32( lectorArchivos.numeroDesdeArchivo(503) ),
-			 	Convert.ToInt32( lectorArchivos.numeroDesdeArchivo(83) ),
-				Convert.ToInt32( lectorArchivos.numeroDesdeArchivo(12) ),
+				(int) ( lectorArchivos.numeroDesdeArchivo(50000000) ),
+				(int) ( lectorArchivos.numeroDesdeArchivo(10000) ),
+				(int) ( lectorArchivos.numeroDesdeArchivo(10) ),
 				 3);
 			return a1;
 		}
@@ -365,14 +373,13 @@ namespace Semana1
 			return a;
 		}
 		override public Comparable crearPorTeclado(){
-			Manejador l=new LectorDeDatos(null);
-			l=new GeneradorDeDatosAleatorios(l);
+		
 			Console.WriteLine("Ingrese nombre y apellido: ");
-			string nombre= l.stringPorTeclado();
+			string nombre= lectorArchivos.stringPorTeclado();
 			Console.WriteLine("Ingrese DNI: ");
-			int dni= l.numeroPorTeclado();
+			int dni= lectorArchivos.numeroPorTeclado();
 			Console.WriteLine("Ingrese Sueldo Basico: ");
-			int sb= l.numeroPorTeclado();
+			int sb= lectorArchivos.numeroPorTeclado();
 			Vendedor a = new Vendedor(nombre,dni,sb);
 			return a;
 		}

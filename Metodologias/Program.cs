@@ -538,11 +538,11 @@ namespace Semana1
 	
 	
 	//*************************     P R A C T I C A   N 7   ************************************************************************************************	
-	//* ERRO EN CONVERTIR DOUBLE A INT, Q PUEDO HACER?
-	/*
+
+	
 	Console.WriteLine("Practica 7 | Ejercicio 3: (Adapter->Compuesto->proxy -> Alumno)");
 	Teacher t1= new Teacher();
-	AlumnoCompuesto a= new AlumnoCompuesto();
+
 	//PROXY 
 	
 	//cinco Alumno generando datos aleatoriamente
@@ -567,11 +567,11 @@ namespace Semana1
 	
 	
 	AlumnoCompuesto aC= new AlumnoCompuesto();
-	IAlumno comp11 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
-	IAlumno comp22 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
-	IAlumno comp33 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
-	IAlumno comp44 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
-	IAlumno comp55 =( (IAlumno)FabricaDeComparables.crearAleatorio(8));
+	IAlumno comp11 =( (IAlumno)FabricaDeComparables.crearAleatorioDesdeArchivo(8));
+	IAlumno comp22 =( (IAlumno)FabricaDeComparables.crearAleatorioDesdeArchivo(8));
+	IAlumno comp33 =( (IAlumno)FabricaDeComparables.crearAleatorioDesdeArchivo(8));
+	IAlumno comp44 =( (IAlumno)FabricaDeComparables.crearAleatorioDesdeArchivo(8));
+	IAlumno comp55 =( (IAlumno)FabricaDeComparables.crearAleatorioDesdeArchivo(8));
 	aC.agregarHijo(comp11);
 	aC.agregarHijo(comp22);
 	aC.agregarHijo(comp33);
@@ -583,6 +583,7 @@ namespace Semana1
 	IAlumno decorador4= new DecoradorListado(decorador3);
 	IAlumno decorador5= new DecoradorAsterisco(decorador4);
 	
+		//ADAPTER-decorado-compuesto-PROXY-ALUMNO
 	AlumnoAdapter aaa= new AlumnoAdapter( ( (IAlumno)decorador5) );
 
 		
@@ -600,7 +601,8 @@ namespace Semana1
 		
 	t1.teachingAClass();
 	
-	*/
+	
+	
 	
 
 			Console.Write("Press any key to continue . . . ");

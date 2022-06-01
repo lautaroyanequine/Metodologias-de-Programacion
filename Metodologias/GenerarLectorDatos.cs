@@ -15,11 +15,23 @@ namespace Semana1
 	/// </summary>
 	/// 
 	
-	//Paso 2 q los manejadores concretos hereden de la superclase
+	//Paso 2 q los manejadores concretos hereden de la superclase.Construir jerarquia de manejadores
 	public class GeneradorDeDatosAleatorios: Manejador
 		
 	{
-		public GeneradorDeDatosAleatorios(Manejador m) : base (m){ }
+		
+		private static GeneradorDeDatosAleatorios unica =null;
+		
+		public static GeneradorDeDatosAleatorios getInstance(Manejador m){
+			
+			if(unica ==null){
+				unica=new GeneradorDeDatosAleatorios(m);
+			}
+			return unica;
+		}
+		
+		
+		private GeneradorDeDatosAleatorios(Manejador m) : base (m){ }
 		     
 		static Random randomUnicoDeInstancia = new Random();
     	
@@ -73,7 +85,7 @@ namespace Semana1
 	
 	//Patron Chain
 	
-	//Paso 1 manejador
+	//Paso 1 manejador-crear superclase
 	
 	abstract public class Manejador{
 		Manejador sucesor = null;
@@ -81,6 +93,9 @@ namespace Semana1
 		public Manejador(Manejador s){
 			sucesor=s;
 		}
+		
+		
+		//Paso 1.1 Crear interface completta de todos los manejadores concretos
 		
 		virtual public int numeroAleatorio(int max) {
 			if(sucesor != null) 
@@ -126,6 +141,6 @@ namespace Semana1
 	}
 }
 
-	
+	//Paso 4 cambiar la referencia de todos los manejadores por el unico manejador
 
 

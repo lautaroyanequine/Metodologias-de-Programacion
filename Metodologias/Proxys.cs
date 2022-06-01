@@ -217,6 +217,8 @@ namespace Semana1
 			if(alumnoReal ==null){
 				if(vecesCreada>=5 && vecesCreada<7)
 					queCrear=7;
+				else if(vecesCreada >7)
+					queCrear=3; //Evita q los alumnos compuestos tengan dos veces a los decoradores
 				else{
 					queCrear=6;
 				}
@@ -227,6 +229,7 @@ namespace Semana1
 					this.setLegajo(alumnoReal.getLegajo());
 					this.setPromedio(alumnoReal.getPromedio());
 				}
+				
 				else
 				{
 					alumnoReal = ((IAlumno)FabricaDeComparables.crearAleatorio(queCrear));
